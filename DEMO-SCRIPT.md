@@ -13,6 +13,7 @@ Recording/live-demo script. Everything in this repo is synthetic — say so on c
 2. Open the repo in VS Code.
 3. Open a terminal in the repo root and confirm `claude` runs.
 4. Have `docs/rules/channels/branch.md` and `docs/rules/credit-cross-sell.md` open in tabs.
+5. `git checkout main` and confirm `git status` is clean — the two prompts live in `docs/demo-instructions/` and each starts by branching fresh off `main`.
 
 ---
 
@@ -26,17 +27,7 @@ Click through the live journey: Overview → Phone & OTP → Profile setup → I
 
 ### Beat 2 — The core prompt
 
-```
-I want to prototype a branch-assisted version of this onboarding journey.
-Read docs/rules/channels/branch.md for the requirements before making changes.
-Reuse the existing pages and components wherever a step is unchanged from the
-digital journey. Add a new FA/banker login and session-start step before
-Overview, and add e-signature capture steps for both the client and the
-banker after Terms & conditions and before Fund account. Wire the new pages
-into the routing in client/src/App.jsx and update the step list so the
-progress indicator reflects the new flow. Keep using the same design tokens
-and component patterns as the rest of the app.
-```
+Follow `docs/demo-instructions/1-prototype-branch-journey.md` — branch setup, the exact prompt to paste, and how to verify it worked, all in one place. (That prompt has already been validated once; see `demo/branch-assisted-fa` on GitHub for the tested fallback if live generation doesn't go cleanly.)
 
 **Talking point while it runs:**
 
@@ -54,14 +45,7 @@ Refresh and click through the new branch flow end to end, including the unchange
 
 ### The core prompt
 
-```
-Using schema/journey-schema.json and the module files in /modules as a
-pattern, generate a journey JSON for the branch-assisted deposit account
-journey we just built, called deposit-account-branch. Reuse existing modules
-for steps that didn't change, including the conditional credit-cross-sell
-module. Create new module definition files, following the same format as the
-existing ones, for the FA login step and for the two e-signature steps.
-```
+Follow `docs/demo-instructions/2-generate-branch-journey-json.md` — run this after Demo 1's prototype exists. Same structure: exact prompt, expected output, verification steps, and the fallback location.
 
 **Talking point:**
 
