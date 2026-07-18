@@ -1,21 +1,10 @@
 /* ============================================================
    SYNTHETIC theme — dark mode, red accent. Demo purposes only.
-   Approximate brand red; swap --accent for the exact hex if needed.
+   Token values now come from design/tokens/tokens.json,
+   generated into tokens.generated.css via `npm run tokens:build`.
    ============================================================ */
 
-:root {
-  --bg-page: #0c0c10;
-  --bg-card: #1a1a21;
-  --border-card: #26262e;
-  --text-primary: #ffffff;
-  --text-secondary: #9997a3;
-  --text-muted: #8a8894;
-  --accent: #e4002b;
-  --accent-hover: #c40025;
-  --success: #2fbf71;
-  --radius-card: 14px;
-  --radius-pill: 28px;
-}
+@import './tokens.generated.css';
 
 * { box-sizing: border-box; }
 

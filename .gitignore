@@ -6,3 +6,4 @@ dist/
 .DS_Store
 *.timestamp-*.mjs
 .claude/settings.local.json
+client/src/styles/tokens.generated.css
