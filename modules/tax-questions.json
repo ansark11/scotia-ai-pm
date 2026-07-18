@@ -1,0 +1,8 @@
+{
+  "moduleId": "tax-questions",
+  "name": "Tax Questions",
+  "description": "SYNTHETIC. Captures FATCA/CRS-style declarations as data only; no branching in this demo.",
+  "implementedAt": "client/src/pages/TaxQuestions.jsx",
+  "appliesToChannels": ["digital", "branch", "contact-centre"],
+  "requiredFields": ["taxUsPerson", "taxOtherResident"]
+}

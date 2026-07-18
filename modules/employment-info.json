@@ -1,0 +1,8 @@
+{
+  "moduleId": "employment-info",
+  "name": "Employment Info",
+  "description": "SYNTHETIC. Branches by employment status; feeds the credit cross-sell eligibility check.",
+  "implementedAt": "client/src/pages/EmploymentInfo.jsx",
+  "appliesToChannels": ["digital", "branch", "contact-centre"],
+  "requiredFields": ["employmentStatus", "annualIncome"]
+}

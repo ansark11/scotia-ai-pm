@@ -1,0 +1,10 @@
+{
+  "moduleId": "credit-cross-sell",
+  "name": "Credit Card Offer",
+  "description": "SYNTHETIC. Conditional step — only shown to applicants who pass the eligibility gate in server/rules/creditOffer.js.",
+  "implementedAt": "client/src/pages/CreditCrossSell.jsx",
+  "backedBy": "server/rules/creditOffer.js",
+  "appliesToChannels": ["digital", "branch", "contact-centre"],
+  "conditional": true,
+  "notes": "See docs/rules/credit-cross-sell.md for the exact gating thresholds."
+}

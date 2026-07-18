@@ -1,0 +1,9 @@
+{
+  "moduleId": "address-info",
+  "name": "Address Info",
+  "description": "SYNTHETIC. Captures residential address; drives provincial disclosures.",
+  "implementedAt": "client/src/pages/AddressInfo.jsx",
+  "backedBy": "server/rules/address.js",
+  "appliesToChannels": ["digital", "branch", "contact-centre"],
+  "requiredFields": ["addressLine", "city", "province", "postalCode"]
+}

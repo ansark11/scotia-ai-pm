@@ -1,0 +1,10 @@
+{
+  "moduleId": "fund-account",
+  "name": "Fund Account",
+  "description": "SYNTHETIC. Captures initial funding method and amount.",
+  "implementedAt": "client/src/pages/FundAccount.jsx",
+  "backedBy": "server/rules/funding.js",
+  "appliesToChannels": ["digital", "branch", "contact-centre"],
+  "requiredFields": ["fundingMethod", "fundingAmount"],
+  "notes": "Already channel-aware: branch unlocks cash/cheque in addition to transfer."
+}

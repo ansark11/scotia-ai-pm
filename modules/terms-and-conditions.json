@@ -1,0 +1,9 @@
+{
+  "moduleId": "terms-and-conditions",
+  "name": "Terms & Conditions",
+  "description": "SYNTHETIC. Product terms + provincial disclosures; requires consent checkbox.",
+  "implementedAt": "client/src/pages/TermsAndConditions.jsx",
+  "appliesToChannels": ["digital", "branch", "contact-centre"],
+  "requiredFields": ["termsAccepted"],
+  "notes": "Digital captures consent via checkbox + timestamp. Branch channel requires e-signature instead — see docs/rules/channels/branch.md."
+}

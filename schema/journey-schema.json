@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OnboardingJourney",
+  "description": "SYNTHETIC schema for demo purposes only. Represents how a future JSON-driven orchestration layer might define an onboarding journey as a sequence of reusable step modules.",
+  "type": "object",
+  "required": ["journeyId", "product", "channel", "steps"],
+  "properties": {
+    "journeyId": { "type": "string" },
+    "product": { "type": "string", "enum": ["deposit-account", "credit-card", "lending", "investment"] },
+    "channel": { "type": "string", "enum": ["digital", "branch", "contact-centre"] },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["order", "module", "required"],
+        "properties": {
+          "order": { "type": "integer" },
+          "module": { "type": "string", "description": "References a file in /modules by moduleId." },
+          "required": { "type": "boolean" },
+          "conditional": { "type": "boolean", "description": "True if this step may be skipped based on a business rule (e.g. credit-cross-sell)." },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "lastUpdated": { "type": "string" },
+        "owner": { "type": "string" }
+      }
+    }
+  }
+}

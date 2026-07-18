@@ -1,0 +1,7 @@
+{
+  "moduleId": "overview",
+  "name": "Overview",
+  "description": "SYNTHETIC. Intro screen showing the selected product and application summary.",
+  "implementedAt": "client/src/pages/Overview.jsx",
+  "appliesToChannels": ["digital", "branch", "contact-centre"]
+}

@@ -1,0 +1,9 @@
+{
+  "moduleId": "profile-setup",
+  "name": "Profile Setup",
+  "description": "SYNTHETIC. Captures full name, DOB, email; gates on age 18+.",
+  "implementedAt": "client/src/pages/ProfileSetup.jsx",
+  "backedBy": "server/rules/profile.js",
+  "appliesToChannels": ["digital", "branch", "contact-centre"],
+  "requiredFields": ["fullName", "dob", "email"]
+}

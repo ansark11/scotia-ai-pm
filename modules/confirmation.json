@@ -1,0 +1,8 @@
+{
+  "moduleId": "confirmation",
+  "name": "Confirmation",
+  "description": "SYNTHETIC. Shows account number and, if accepted, a note about the credit card.",
+  "implementedAt": "client/src/pages/Confirmation.jsx",
+  "appliesToChannels": ["digital", "branch", "contact-centre"],
+  "requiredFields": ["accountNumber"]
+}
