@@ -1,0 +1,9 @@
+{
+  "moduleId": "esign-fa",
+  "name": "FA E-Signature",
+  "description": "SYNTHETIC. Branch-only — the second of two required e-signatures. The FA co-signs to confirm they witnessed and assisted the account opening.",
+  "implementedAt": "client/src/pages/EsignFa.jsx",
+  "appliesToChannels": ["branch"],
+  "requiredFields": ["faSignature", "faSignedAt"],
+  "notes": "See docs/rules/channels/branch.md. Runs after esign-client and before fund-account."
+}

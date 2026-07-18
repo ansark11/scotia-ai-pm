@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react'
 // SYNTHETIC. Ordered steps for the digital deposit-account journey.
 // Note: "Credit offer" is only ever visited by applicants who pass the
 // eligibility check in EmploymentInfo — see docs/rules/credit-cross-sell.md.
-export const JOURNEY_STEPS = [
+export const JOURNEY_STEPS_DIGITAL = [
   { path: '/overview', label: 'Overview' },
   { path: '/phone-otp', label: 'Phone & OTP' },
   { path: '/profile', label: 'Profile setup' },
@@ -13,6 +13,26 @@ export const JOURNEY_STEPS = [
   { path: '/credit-offer', label: 'Credit card offer' },
   { path: '/tax', label: 'Tax questions' },
   { path: '/terms', label: 'Terms & conditions' },
+  { path: '/fund', label: 'Fund account' },
+  { path: '/confirmation', label: 'Confirmation' }
+]
+
+// SYNTHETIC. Branch-assisted journey — see docs/rules/channels/branch.md.
+// Same steps as digital in the middle (including the credit-offer gate),
+// plus an FA login before Overview and two e-signatures before funding.
+export const JOURNEY_STEPS_BRANCH = [
+  { path: '/fa-login', label: 'FA login' },
+  { path: '/overview', label: 'Overview' },
+  { path: '/phone-otp', label: 'Phone & OTP' },
+  { path: '/profile', label: 'Profile setup' },
+  { path: '/identity', label: 'Identity verification' },
+  { path: '/address', label: 'Address info' },
+  { path: '/employment', label: 'Employment info' },
+  { path: '/credit-offer', label: 'Credit card offer' },
+  { path: '/tax', label: 'Tax questions' },
+  { path: '/terms', label: 'Terms & conditions' },
+  { path: '/esign-client', label: 'Client e-signature' },
+  { path: '/esign-fa', label: 'FA e-signature' },
   { path: '/fund', label: 'Fund account' },
   { path: '/confirmation', label: 'Confirmation' }
 ]
@@ -46,7 +66,14 @@ const DEFAULT_JOURNEY_DATA = {
   taxOtherResident: false,
   termsAccepted: true,
   fundingMethod: 'transfer',
-  fundingAmount: '500'
+  fundingAmount: '500',
+  channel: 'digital',
+  faEmployeeId: '',
+  faName: '',
+  clientSignature: '',
+  clientSignedAt: null,
+  faSignature: '',
+  faSignedAt: null
 }
 
 const JourneyContext = createContext(null)
