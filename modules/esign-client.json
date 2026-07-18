@@ -1,0 +1,9 @@
+{
+  "moduleId": "esign-client",
+  "name": "Client E-Signature",
+  "description": "SYNTHETIC. Branch-only — with a banker present, consent can't rely on a checkbox alone. Captures the client's e-signature on the account opening consent.",
+  "implementedAt": "client/src/pages/EsignClient.jsx",
+  "appliesToChannels": ["branch"],
+  "requiredFields": ["clientSignature", "clientSignedAt"],
+  "notes": "See docs/rules/channels/branch.md. Runs after terms-and-conditions and before esign-fa."
+}

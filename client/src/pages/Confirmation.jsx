@@ -9,7 +9,7 @@ export default function Confirmation() {
     fetch('/api/application', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...journeyData, channel: 'digital' })
+      body: JSON.stringify(journeyData)
     })
       .then((res) => res.json())
       .then((result) => setAccountNumber(result.accountNumber))
@@ -25,6 +25,12 @@ export default function Confirmation() {
             Your new account number is <strong>{accountNumber}</strong>. A welcome email is on its way to{' '}
             {journeyData.email}.
           </p>
+          {journeyData.channel === 'branch' && (
+            <p className="subtext">
+              Financial Advisor {journeyData.faName} ({journeyData.faEmployeeId}) assisted you with this account
+              opening.
+            </p>
+          )}
           {journeyData.creditOfferAccepted && (
             <div
               style={{

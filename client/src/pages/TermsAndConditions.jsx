@@ -10,7 +10,9 @@ export default function TermsAndConditions() {
 
   function handleContinue() {
     updateJourneyData({ termsAccepted: checked, consentTimestamp: new Date().toISOString() })
-    navigate('/fund')
+    // Branch consent needs two e-signatures, not just this checkbox — see
+    // docs/rules/channels/branch.md.
+    navigate(journeyData.channel === 'branch' ? '/esign-client' : '/fund')
   }
 
   return (

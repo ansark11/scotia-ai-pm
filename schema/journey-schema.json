@@ -18,6 +18,11 @@
           "module": { "type": "string", "description": "References a file in /modules by moduleId." },
           "required": { "type": "boolean" },
           "conditional": { "type": "boolean", "description": "True if this step may be skipped based on a business rule (e.g. credit-cross-sell)." },
+          "dependsOn": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "moduleIds of steps that must be completed before this step can start, when that's a named business rule rather than just this step's position in the array (e.g. an e-signature step depending on session start)."
+          },
           "notes": { "type": "string" }
         }
       }

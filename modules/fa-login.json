@@ -1,0 +1,9 @@
+{
+  "moduleId": "fa-login",
+  "name": "FA Login",
+  "description": "SYNTHETIC. Branch-only entry point — establishes which banker is assisting and which client record is being opened before the shared journey steps begin.",
+  "implementedAt": "client/src/pages/FaLogin.jsx",
+  "appliesToChannels": ["branch"],
+  "requiredFields": ["faEmployeeId", "faName"],
+  "notes": "See docs/rules/channels/branch.md. Digital and contact-centre channels have no equivalent step."
+}
