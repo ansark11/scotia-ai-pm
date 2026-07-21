@@ -32,15 +32,15 @@ anywhere, rather than guessing at it.
 Specific things a good run should catch, since they're genuinely present in this repo (not hypothetical):
 
 - **Phone & OTP and Fund account have rules that exist only in code** — `server/rules/phone.js` and `server/rules/funding.js` have no `docs/rules/*.md` mirror, unlike every other rule area.
-- **Identity verification's doc claims a name-matching rule** (`docs/rules/identity-verification.md`) that `server/rules/identity.js` never actually implements.
-- **Employment info's doc claims unemployed applicants default to $0 income** (`docs/rules/employment-info.md`) but `EmploymentInfo.jsx` never resets or defaults that field.
 - **Terms & conditions has no server-side validation at all** — consent is enforced only by the Continue button staying disabled client-side, unlike every other step which has a backing `/api/*` check.
+
+Two mismatches from an earlier dry run of this demo (identity verification's name-matching claim, and employment info's "defaults to $0" claim) have since been fixed at the source — `server/rules/identity.js` now implements full name + email + phone matching (not name alone), and `docs/rules/employment-info.md` no longer makes the unimplemented $0-default claim. A correct run today should **not** flag those two anymore; if it does, the docs and code have likely drifted again since.
 
 ## How to verify it worked
 
 1. All 11 digital journey steps are represented, in order.
 2. Every rule cites a real file path — spot-check 2-3 against the actual source to confirm it's not paraphrased or invented.
-3. Confirm the four items above (or equivalent genuine mismatches) show up as explicit flags, not silently smoothed over or guessed at.
+3. Confirm the two remaining items above (or equivalent genuine mismatches) show up as explicit flags, not silently smoothed over or guessed at.
 4. Read it as the non-technical audience — does each rule make sense without opening any code?
 
 If it misses the doc/code mismatches above and just describes the code cleanly with no flags, that's a miss worth catching live — the entire point of this demo is proving it doesn't blindly trust either source on its own.

@@ -27,7 +27,14 @@ export default function IdentityVerification() {
     const res = await fetch('/api/identity/validate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ idType, idNumber, idExpiry })
+      body: JSON.stringify({
+        idType,
+        idNumber,
+        idExpiry,
+        fullName: journeyData.fullName,
+        email: journeyData.email,
+        phoneNumber: journeyData.phoneNumber
+      })
     })
     const result = await res.json()
     setLoading(false)
