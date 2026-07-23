@@ -6,3 +6,6 @@ dist/
 .DS_Store
 *.timestamp-*.mjs
 .claude/settings.local.json
+
+# Possibly-real reference material - not synthetic, not for git until confirmed safe
+reference/
