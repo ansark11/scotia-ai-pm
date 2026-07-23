@@ -11,9 +11,9 @@ Live-demo version of "Demo 5" in `CLAUDE.md`. Independent of demos 1-4 — this 
 
 This is the demo with a built-in caveat, worth saying out loud rather than letting it pass unremarked: it works cleanly here because this repo's rules are already explicit and contained in a handful of small files. A real extractor over a production codebase would need human review before anyone acts on its output, not blind trust — especially anywhere the logic is implicit rather than written down.
 
-## Step 1 — the markdown prompt
+## The prompt
 
-Paste this into Claude Code:
+Paste this into Claude Code — one prompt, markdown and PDF both:
 
 ```
 Read every rule that governs the digital deposit account journey:
@@ -24,20 +24,16 @@ business-rules/deposit-account-digital.md file, organized by journey step,
 written in plain language, with a note on where each rule lives in the
 codebase. Flag anything that reads as a rule but isn't explicitly stated
 anywhere, rather than guessing at it.
-```
 
-## Step 2 — render it as PDF
-
-This is a leadership-facing deliverable, not a repo artifact — it needs to leave this step as a PDF, not raw markdown. Paste this next:
-
-```
-Convert business-rules/deposit-account-digital.md into a styled HTML file
-and render it to PDF using headless Chrome print-to-pdf. House style: serif
-body text (Georgia), sans-serif headers (Helvetica/Arial) in dark red
-(#7a1f2b) with a bottom border, an amber callout box (#a8863a left border,
-#f5f2ea background) for the trustworthiness caveat at the top, and a red
-callout box (#b23a2e left border, #fdf0ef background) for each flagged
-mismatch. Save the HTML and PDF next to the source markdown, e.g.
+Then convert that markdown into a styled HTML file and render it to PDF
+using headless Chrome print-to-pdf — this is a leadership-facing
+deliverable, not a repo artifact, so it needs to leave this step as a PDF,
+not raw markdown. House style: serif body text (Georgia), sans-serif
+headers (Helvetica/Arial) in dark red (#7a1f2b) with a bottom border, an
+amber callout box (#a8863a left border, #f5f2ea background) for the
+trustworthiness caveat at the top, and a red callout box (#b23a2e left
+border, #fdf0ef background) for each flagged mismatch. Save the HTML and
+PDF next to the source markdown, e.g.
 business-rules/deposit-account-digital.pdf.
 ```
 

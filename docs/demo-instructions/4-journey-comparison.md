@@ -7,9 +7,9 @@ Live-demo version of "Demo 4" in `CLAUDE.md`. Run this **after** Instruction She
 - Instruction Sheets 1 and 2 should already be done on this branch — specifically, `existing-journeys/deposit-branch.json` needs to exist alongside `existing-journeys/deposit-digital.json`.
 - Google Chrome must be installed — the PDF export step uses headless Chrome's print-to-PDF (`pandoc`/`wkhtmltopdf` aren't installed in this environment, and weren't needed).
 
-## Step 1 — the markdown prompt
+## The prompt
 
-Paste this into Claude Code:
+Paste this into Claude Code — one prompt, markdown and PDF both:
 
 ```
 Compare existing-journeys/deposit-digital.json and the branch journey JSON we
@@ -17,22 +17,18 @@ created in demo 2. Produce a markdown table with one row per step, showing
 whether each step is shared or channel-specific, and a plain-language note on
 any rule differences (e.g. consent capture, funding methods). Save it as
 comparisons/digital-vs-branch.md.
-```
 
-## Step 2 — render it as PDF
-
-This is a leadership-facing deliverable, not a repo artifact — it needs to leave this step as a PDF, not raw markdown. Paste this next:
-
-```
-Convert comparisons/digital-vs-branch.md into a styled HTML file and render
-it to PDF using headless Chrome print-to-pdf, landscape orientation (this is
-a wide table). House style: serif body text (Georgia), sans-serif headers
-(Helvetica/Arial) in dark red (#7a1f2b) with a bottom border, a dark red
-table header row (#7a1f2b, white text), alternating light row shading, and
-small colored badges for the shared/channel-specific column - green
-(#e8f0e8 background, #2f5a35 text) for shared, red (#fdf0ef background,
-#7a1f2b text) for channel-specific. Save the HTML and PDF next to the
-source markdown, e.g. comparisons/digital-vs-branch.pdf.
+Then convert that markdown into a styled HTML file and render it to PDF
+using headless Chrome print-to-pdf, landscape orientation (this is a wide
+table) — this is a leadership-facing deliverable, not a repo artifact, so
+it needs to leave this step as a PDF, not raw markdown. House style: serif
+body text (Georgia), sans-serif headers (Helvetica/Arial) in dark red
+(#7a1f2b) with a bottom border, a dark red table header row (#7a1f2b, white
+text), alternating light row shading, and small colored badges for the
+shared/channel-specific column - green (#e8f0e8 background, #2f5a35 text)
+for shared, red (#fdf0ef background, #7a1f2b text) for channel-specific.
+Save the HTML and PDF next to the source markdown, e.g.
+comparisons/digital-vs-branch.pdf.
 ```
 
 ## What this should produce

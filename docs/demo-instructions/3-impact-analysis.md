@@ -8,9 +8,9 @@ Live-demo version of "Demo 3" in `CLAUDE.md`. Run this **after** Instruction She
 - Google Chrome must be installed — the PDF export step uses headless Chrome's print-to-PDF (`pandoc`/`wkhtmltopdf` aren't installed in this environment, and weren't needed).
 - Otherwise no new setup — this step only reads files, it doesn't touch the running app.
 
-## Step 1 — the markdown prompt
+## The prompt
 
-Paste this into Claude Code:
+Paste this into Claude Code — one prompt, markdown and PDF both:
 
 ```
 I'm proposing we add joint-account support to the branch deposit account
@@ -33,22 +33,18 @@ explicitly if any single open question would swing an estimate's size
 materially — don't bury that in a footnote. Close with a rollup total and a
 one-line caveat that a real team would parallelize this, so calendar time
 would shrink even though total effort wouldn't.
-```
 
-## Step 2 — render it as PDF
-
-The brief needs to leave this step as a formatted PDF, not raw markdown — this is a leadership-facing deliverable, not a repo artifact. Paste this next:
-
-```
-Convert impact-briefs/joint-account-branch.md into a styled HTML file and
-render it to PDF using headless Chrome print-to-pdf. House style: serif
-body text (Georgia), sans-serif headers (Helvetica/Arial) in dark red
-(#7a1f2b) with a bottom border, an amber callout box (#a8863a left border,
-#f5f2ea background) for the "bottom line" and assumptions callouts, a red
-callout box (#b23a2e left border, #fdf0ef background) for open questions
-and flagged items, and a plain bordered table with a dark red header row
-for the effort-sizing table. Save the HTML and PDF next to the source
-markdown, e.g. impact-briefs/joint-account-branch.pdf.
+Then convert that markdown into a styled HTML file and render it to PDF
+using headless Chrome print-to-pdf — this is a leadership-facing
+deliverable, not a repo artifact, so it needs to leave this step as a PDF,
+not raw markdown. House style: serif body text (Georgia), sans-serif
+headers (Helvetica/Arial) in dark red (#7a1f2b) with a bottom border, an
+amber callout box (#a8863a left border, #f5f2ea background) for the
+"bottom line" and assumptions callouts, a red callout box (#b23a2e left
+border, #fdf0ef background) for open questions and flagged items, and a
+plain bordered table with a dark red header row for the effort-sizing
+table. Save the HTML and PDF next to the source markdown, e.g.
+impact-briefs/joint-account-branch.pdf.
 ```
 
 ## What this should produce
