@@ -28,6 +28,10 @@ the client's; funding depends on both signatures existing). Add dependsOn
 as a new optional field to schema/journey-schema.json if it isn't already
 there, without breaking validation of the existing digital journey.
 
+Format every step object the same way existing-journeys/deposit-digital.json
+already does: one field per line, not a single-line object, even for steps
+with only two or three fields.
+
 Validate the resulting JSON against the schema when done.
 ```
 
@@ -37,6 +41,7 @@ Validate the resulting JSON against the schema when done.
 - Three new files under `/modules`: FA login, client e-signature, FA e-signature — same shape as the existing module files (`moduleId`, `name`, `description`, `implementedAt`, `appliesToChannels`, `requiredFields`).
 - `schema/journey-schema.json` gets one new optional field (`dependsOn`) — additive only, shouldn't break the existing digital journey.
 - `dependsOn` should appear only where there's a real named business rule (FA login before Overview, FA signs after client, funding after both signatures) — not on every single step.
+- Every step object formatted one field per line, matching `existing-journeys/deposit-digital.json` — not compact single-line objects.
 
 ## How to verify it worked
 
