@@ -1,0 +1,113 @@
+{
+  "journeyId": "deposit-account-branch",
+  "product": "deposit-account",
+  "channel": "branch",
+  "steps": [
+    {
+      "order": 1,
+      "module": "fa-login",
+      "required": true,
+      "notes": "Branch-only entry point. See docs/rules/channels/branch.md."
+    },
+    {
+      "order": 2,
+      "module": "overview",
+      "required": true,
+      "dependsOn": ["fa-login"],
+      "notes": "System must know which FA and client this session is for before the journey proper begins."
+    },
+    {
+      "order": 3,
+      "module": "phone-number",
+      "required": true
+    },
+    {
+      "order": 4,
+      "module": "otp-verification",
+      "required": true
+    },
+    {
+      "order": 5,
+      "module": "profile-setup",
+      "required": true
+    },
+    {
+      "order": 6,
+      "module": "idv-remote-fa",
+      "required": true,
+      "notes": "Branch-only. The customer must complete ID-V on their own device — see docs/rules/remote-identity-verification.md."
+    },
+    {
+      "order": 7,
+      "module": "idv-remote-complete",
+      "required": true,
+      "dependsOn": ["idv-remote-fa"],
+      "notes": "Only reached once the customer's own-device session reports completion."
+    },
+    {
+      "order": 8,
+      "module": "address-info",
+      "required": true
+    },
+    {
+      "order": 9,
+      "module": "employment-info",
+      "required": true
+    },
+    {
+      "order": 10,
+      "module": "credit-cross-sell",
+      "required": false,
+      "conditional": true,
+      "notes": "Reused as-is from the digital journey. Only shown if server/rules/creditOffer.js eligibility check passes."
+    },
+    {
+      "order": 11,
+      "module": "credit-card-added",
+      "required": false,
+      "conditional": true,
+      "notes": "Only shown if the credit card offer was accepted."
+    },
+    {
+      "order": 12,
+      "module": "tax-questions",
+      "required": true
+    },
+    {
+      "order": 13,
+      "module": "terms-and-conditions",
+      "required": true
+    },
+    {
+      "order": 14,
+      "module": "esign-client",
+      "required": true,
+      "dependsOn": ["terms-and-conditions"],
+      "notes": "Branch-only. With a banker present, consent can't rely on the agreement checkboxes alone."
+    },
+    {
+      "order": 15,
+      "module": "esign-fa",
+      "required": true,
+      "dependsOn": ["esign-client"],
+      "notes": "Branch-only. FA co-signs after the client."
+    },
+    {
+      "order": 16,
+      "module": "fund-account",
+      "required": true,
+      "dependsOn": ["esign-fa"],
+      "notes": "Both signatures must exist before funding can start. Branch offers transfer, cash, or cheque — see server/rules/funding.js."
+    },
+    {
+      "order": 17,
+      "module": "confirmation",
+      "required": true,
+      "notes": "Notes that a Financial Advisor assisted the client, and shows a QR code + infotip so the customer can set up online banking access."
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "2026-07-24",
+    "owner": "Branch Onboarding Product Team (SYNTHETIC)"
+  }
+}

@@ -5,5 +5,5 @@
   "implementedAt": "client/src/pages/TermsAndConditions.jsx",
   "appliesToChannels": ["digital", "branch", "contact-centre"],
   "requiredFields": ["termsAccepted"],
-  "notes": "Digital captures consent via checkbox + timestamp, one checkbox per visible agreement card. Branch channel requires e-signature instead — see docs/rules/channels/branch.md."
+  "notes": "Reused as-is on both channels — same accordion cards, same per-card checkboxes. Branch additionally requires two e-signatures (esign-client, esign-fa) afterward, since a checkbox alone isn't sufficient consent with a banker present — see docs/rules/channels/branch.md."
 }

@@ -10,6 +10,7 @@ const { validateAddress } = require('./rules/address')
 const { checkEligibility } = require('./rules/creditOffer')
 const { validateFunding } = require('./rules/funding')
 const { createApplication } = require('./data/mockDb')
+const { createSession, getSession, completeSession } = require('./data/remoteIdvSessions')
 
 const app = express()
 app.use(cors())
@@ -44,6 +45,40 @@ app.post('/api/credit-offer/eligibility', (req, res) => {
 app.post('/api/funding', (req, res) => {
   const { channel, ...fundingData } = req.body
   res.json(validateFunding(fundingData, channel))
+})
+
+// SYNTHETIC. Branch-only remote ID-V handoff — see docs/rules/remote-identity-verification.md.
+// The FA's screen creates a session and polls its status; the customer's
+// own device (a separate browser session, reached via the emailed/texted
+// link) verifies against the same session and flips it to 'completed'.
+app.post('/api/idv-remote/create', (req, res) => {
+  const session = createSession(req.body)
+  res.json({ token: session.token })
+})
+
+app.get('/api/idv-remote/:token/status', (req, res) => {
+  const session = getSession(req.params.token)
+  if (!session) return res.status(404).json({ found: false })
+  res.json({
+    found: true,
+    status: session.status,
+    fullName: session.fullName,
+    email: session.email,
+    phoneNumber: session.phoneNumber
+  })
+})
+
+app.post('/api/idv-remote/:token/verify', (req, res) => {
+  const session = getSession(req.params.token)
+  if (!session) return res.status(404).json({ valid: false, reasons: ['This link has expired or was not found.'] })
+  const result = validateIdentity({
+    ...req.body,
+    fullName: session.fullName,
+    email: session.email,
+    phoneNumber: session.phoneNumber
+  })
+  if (result.valid) completeSession(req.params.token)
+  res.json(result)
 })
 
 app.post('/api/application', (req, res) => {

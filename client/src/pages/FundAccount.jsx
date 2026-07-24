@@ -4,17 +4,25 @@ import FormField from '../components/FormField.jsx'
 import BottomNav from '../components/BottomNav.jsx'
 import { useJourney } from '../context/JourneyContext.jsx'
 
-// SYNTHETIC. Digital channel now offers the same funding methods as
-// branch — see docs/rules/fund-account.md and server/rules/funding.js.
-const FUNDING_OPTIONS = [
+// SYNTHETIC. Channel-aware — see docs/rules/fund-account.md and
+// server/rules/funding.js. Digital offers transfer, e-Transfer, or cheque;
+// branch offers transfer, cash, or cheque (no e-Transfer there).
+const FUNDING_OPTIONS_DIGITAL = [
   { value: 'transfer', label: 'Transfer from another bank', description: 'Link an external account and transfer funds.' },
   { value: 'e-transfer', label: 'Interac e-Transfer', description: 'Send funds using an email address or phone number.' },
   { value: 'cheque', label: 'Deposit a cheque', description: 'Mobile deposit — snap a photo of your cheque.' }
+]
+const FUNDING_OPTIONS_BRANCH = [
+  { value: 'transfer', label: 'Transfer from another bank', description: 'Link an external account and transfer funds.' },
+  { value: 'cash', label: 'Cash', description: 'Deposit cash with your FA today.' },
+  { value: 'cheque', label: 'Cheque', description: 'Deposit a cheque with your FA today.' }
 ]
 
 export default function FundAccount() {
   const navigate = useNavigate()
   const { journeyData, updateJourneyData } = useJourney()
+  const isBranch = journeyData.channel === 'branch'
+  const options = isBranch ? FUNDING_OPTIONS_BRANCH : FUNDING_OPTIONS_DIGITAL
   const [fundingMethod, setFundingMethod] = useState(journeyData.fundingMethod)
   const [fundingAmount, setFundingAmount] = useState(journeyData.fundingAmount)
   const [reasons, setReasons] = useState([])
@@ -26,7 +34,7 @@ export default function FundAccount() {
     const res = await fetch('/api/funding', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fundingMethod, fundingAmount: Number(fundingAmount), channel: 'digital' })
+      body: JSON.stringify({ fundingMethod, fundingAmount: Number(fundingAmount), channel: journeyData.channel })
     })
     const result = await res.json()
     setLoading(false)
@@ -43,7 +51,7 @@ export default function FundAccount() {
       <h2>Fund your account</h2>
       <p className="subtext">Choose how you&apos;d like to add money to your new account.</p>
 
-      {FUNDING_OPTIONS.map((option) => {
+      {options.map((option) => {
         const selected = fundingMethod === option.value
         return (
           <div

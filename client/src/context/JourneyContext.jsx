@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from 'react'
 // Note: "Credit offer" is only ever visited by applicants who pass the
 // eligibility check in EmploymentInfo — see docs/rules/credit-cross-sell.md.
 // "Card added" is only ever visited if that offer was accepted.
-export const JOURNEY_STEPS = [
+export const JOURNEY_STEPS_DIGITAL = [
   { path: '/overview', label: 'Overview' },
   { path: '/phone', label: 'Phone number' },
   { path: '/otp', label: 'Verify code' },
@@ -17,6 +17,32 @@ export const JOURNEY_STEPS = [
   { path: '/credit-card-added', label: 'Card added' },
   { path: '/tax', label: 'Tax questions' },
   { path: '/terms', label: 'Account agreements' },
+  { path: '/fund', label: 'Fund account' },
+  { path: '/confirmation', label: 'Confirmation' }
+]
+
+// SYNTHETIC. Branch-assisted journey — see docs/rules/channels/branch.md.
+// Reuses most digital steps as-is. Identity verification must happen on
+// the customer's own device (see docs/rules/remote-identity-verification.md)
+// so it's replaced by idv-remote-fa/idv-remote-complete instead of
+// identity-intro/identity. Adds FA login up front and dual e-signature
+// before funding.
+export const JOURNEY_STEPS_BRANCH = [
+  { path: '/fa-login', label: 'FA login' },
+  { path: '/overview', label: 'Overview' },
+  { path: '/phone', label: 'Phone number' },
+  { path: '/otp', label: 'Verify code' },
+  { path: '/profile', label: 'Profile setup' },
+  { path: '/idv-remote-fa', label: 'Verify identity' },
+  { path: '/idv-remote-complete', label: 'Identity verified' },
+  { path: '/address', label: 'Address info' },
+  { path: '/employment', label: 'Employment info' },
+  { path: '/credit-offer', label: 'Credit card offer' },
+  { path: '/credit-card-added', label: 'Card added' },
+  { path: '/tax', label: 'Tax questions' },
+  { path: '/terms', label: 'Account agreements' },
+  { path: '/esign-client', label: 'Client e-signature' },
+  { path: '/esign-fa', label: 'FA e-signature' },
   { path: '/fund', label: 'Fund account' },
   { path: '/confirmation', label: 'Confirmation' }
 ]
@@ -50,7 +76,15 @@ const DEFAULT_JOURNEY_DATA = {
   taxOtherResident: false,
   termsAccepted: true,
   fundingMethod: 'transfer',
-  fundingAmount: '500'
+  fundingAmount: '500',
+  channel: 'digital',
+  faEmployeeId: '',
+  faName: '',
+  idvRemoteCompleted: false,
+  clientSignature: '',
+  clientSignedAt: null,
+  faSignature: '',
+  faSignedAt: null
 }
 
 const JourneyContext = createContext(null)

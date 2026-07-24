@@ -1,0 +1,9 @@
+{
+  "moduleId": "idv-remote-fa",
+  "name": "Verify Identity (Remote, FA view)",
+  "description": "SYNTHETIC. Branch-only, FA-facing. The customer must complete ID-V on their own device, not the FA's — this screen sends them a link (SMS or email) and polls the server for completion. Replaces identity-intro + identity-verification for branch.",
+  "implementedAt": "client/src/pages/IdvRemoteFa.jsx",
+  "backedBy": "server/data/remoteIdvSessions.js",
+  "appliesToChannels": ["branch"],
+  "notes": "See docs/rules/remote-identity-verification.md. The customer's own-device side of this flow (client/src/pages/RemoteIdentityEntry.jsx) is intentionally not a tracked journey step — it's a separate device/session reached via /remote-identity/:token."
+}

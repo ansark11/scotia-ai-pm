@@ -4,7 +4,7 @@
   "description": "SYNTHETIC. Confirms identity via ID document; checks expiry.",
   "implementedAt": "client/src/pages/IdentityVerification.jsx",
   "backedBy": "server/rules/identity.js",
-  "appliesToChannels": ["digital", "branch", "contact-centre"],
+  "appliesToChannels": ["digital", "contact-centre"],
   "requiredFields": ["idType", "idNumber", "idExpiry"],
-  "notes": "Digital channel mocks document scan + liveness check. Branch channel is expected to swap this to physical ID review — see docs/rules/channels/branch.md. Now reached via the identity-intro splash screen, not directly from profile-setup."
+  "notes": "Digital channel mocks document scan + liveness check, reached via the identity-intro splash screen. Branch channel does not use this module — it requires the customer to complete ID-V on their own device instead, via idv-remote-fa/idv-remote-complete — see docs/rules/remote-identity-verification.md."
 }

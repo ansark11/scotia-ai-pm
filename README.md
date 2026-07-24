@@ -21,6 +21,12 @@ Every screen is pre-filled with mock data so you can click through the entire 14
 13. Fund account
 14. Confirmation
 
+## The branch-assisted journey (17 steps)
+
+Start at `/fa-login` instead of `/overview`. Adds an FA login step, replaces identity verification with a remote hand-off (the customer completes ID-V on their own device — see `docs/rules/remote-identity-verification.md`), adds dual e-signature (client + FA) before funding, and shows a QR code on Confirmation for the customer to set up online banking access. Everything else is reused as-is from the digital journey.
+
+To see the remote ID-V hand-off for real: on the "Verify identity" step, click Send via SMS/Email, then open the displayed link (in a new tab, or on another device on the same network) to complete ID-V as the customer — the FA's screen will detect completion and continue automatically.
+
 ## What's in here
 
 ```
@@ -28,16 +34,16 @@ deposit-account-onboarding/
 ├── client/                  React + Vite frontend (npm run dev)
 │   └── src/
 │       ├── components/      TopBar, BottomNav, FormField, CTAButton, CreditCardVisual, AccountCardVisual
-│       ├── pages/           14 journey screens, one page each
-│       └── context/         JourneyContext — 14-step list + pre-filled mock data
+│       ├── pages/           journey screens (digital + branch-only), one page each
+│       └── context/         JourneyContext — digital + branch step lists, pre-filled mock data
 ├── server/                  Express mock backend (npm start)
 │   ├── rules/               real business-rule validation logic, one file per rule area
-│   └── data/                in-memory mock "database"
+│   └── data/                in-memory mock "database" + remote ID-V session store
 ├── docs/rules/              plain-language versions of the same rules, plus channel rules
-│   └── channels/            digital.md (implemented) and branch.md (target state, future demo)
+│   └── channels/            digital.md and branch.md — both implemented
 ├── schema/                  journey-schema.json — the future JSON-driven journey format
 ├── modules/                 one JSON descriptor per step, matching the schema
-└── existing-journeys/       deposit-digital.json — the current journey expressed in that schema
+└── existing-journeys/       deposit-digital.json and deposit-branch.json — both journeys expressed in that schema
 ```
 
 ## How to run it

@@ -15,13 +15,14 @@ Nothing in this repo is real bank code, real business rules, or real customer da
 - `docs/rules/*.md` — plain-language mirror of each rule in `server/rules/`, plus `docs/rules/channels/digital.md` and `branch.md`.
 - `schema/journey-schema.json` — the future JSON-driven orchestration format.
 - `modules/*.json` — one descriptor per journey step, matching the schema.
-- `existing-journeys/*.json` — journeys expressed in that schema.
+- `existing-journeys/*.json` — both the digital and branch journeys, expressed in that schema.
 - `DEMO-SCRIPT.md` — the recording script for the leadership presentation.
 
 ## What's already built
 
-- **Demo 1 (done):** prompted Claude Code to prototype a branch-assisted variant of the digital journey — added an FA/banker login step before Overview, and e-signature capture (client + banker) after Terms & conditions and before Fund account — reusing existing components and rules wherever a step didn't change.
-- **Demo 2 (done):** prompted Claude Code to express that branch journey as a structured journey JSON under `existing-journeys/`, plus new module descriptors for the FA login and e-signature steps, following the same schema as the existing modules.
+- **Digital journey (14 steps, permanent):** the full self-serve digital journey, including a redesigned UI — bulleted landing benefits, split phone/OTP screens, an identity-verification intro splash, a moment-of-delight transition after credit card acceptance, funding presented as selectable option cards, terms & conditions as collapsible per-product agreement cards, and an expanded confirmation screen (products opened, balance, card delivery timing).
+- **Branch journey (17 steps, permanent):** built directly (not live-generated) given how much complexity it now involves. Adds FA login before Overview; replaces identity verification with a **remote hand-off** — the customer must complete ID-V on their own device, not the FA's, coordinated via a real server-backed session the FA's screen polls (see `docs/rules/remote-identity-verification.md`); adds dual e-signature (client + FA) before funding; and shows a QR code + infotip on Confirmation so the customer can set up online banking access. Everything else is reused as-is from the digital journey.
+- Both journeys are expressed as structured JSON under `existing-journeys/`, with matching module descriptors under `modules/`, all validated against `schema/journey-schema.json`.
 
 ## What's next — 3 more demos
 

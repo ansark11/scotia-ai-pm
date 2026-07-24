@@ -1,7 +1,7 @@
 {
   "moduleId": "confirmation",
   "name": "Confirmation",
-  "description": "SYNTHETIC. Shows a card visual, a products-opened list (name + account number per product — chequing always, credit card too if the cross-sell offer was accepted, each with its own generated account number), current balance, and, if a credit card was added, its mail-delivery timing.",
+  "description": "SYNTHETIC. Shows a card visual, a products-opened list (name + account number per product — chequing always, credit card too if the cross-sell offer was accepted, each with its own generated account number), current balance, and, if a credit card was added, its mail-delivery timing. Branch channel additionally shows a QR code and infotip so the FA can hand the device to the customer to set up online banking access.",
   "implementedAt": "client/src/pages/Confirmation.jsx",
   "backedBy": "server/data/mockDb.js",
   "appliesToChannels": ["digital", "branch", "contact-centre"],

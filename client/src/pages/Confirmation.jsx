@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import QRCode from 'qrcode'
 import { useJourney } from '../context/JourneyContext.jsx'
 import AccountCardVisual from '../components/AccountCardVisual.jsx'
 import CreditCardVisual from '../components/CreditCardVisual.jsx'
@@ -6,6 +7,7 @@ import CreditCardVisual from '../components/CreditCardVisual.jsx'
 export default function Confirmation() {
   const { journeyData } = useJourney()
   const [result, setResult] = useState(null)
+  const [qrDataUrl, setQrDataUrl] = useState(null)
 
   useEffect(() => {
     fetch('/api/application', {
@@ -17,6 +19,13 @@ export default function Confirmation() {
       .then(setResult)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if (journeyData.channel === 'branch' && result?.accountNumber) {
+      const setupUrl = `${window.location.origin}/digital-access-setup?acct=${result.accountNumber}`
+      QRCode.toDataURL(setupUrl, { margin: 1, width: 160 }).then(setQrDataUrl)
+    }
+  }, [journeyData.channel, result])
 
   if (!result) {
     return <p>Finalizing your account...</p>
@@ -86,10 +95,33 @@ export default function Confirmation() {
             borderRadius: 'var(--radius-card)',
             padding: '14px 16px',
             fontSize: 14,
-            color: 'var(--text-secondary)'
+            color: 'var(--text-secondary)',
+            marginBottom: journeyData.channel === 'branch' ? 12 : 0
           }}
         >
           Your Scotia Momentum Card (demo) will arrive by mail in 5-7 business days.
+        </div>
+      )}
+
+      {journeyData.channel === 'branch' && (
+        <div
+          style={{
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border-card)',
+            borderRadius: 'var(--radius-card)',
+            padding: '16px',
+            textAlign: 'center'
+          }}
+        >
+          <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 12 }}>SET UP ONLINE BANKING</div>
+          {qrDataUrl ? (
+            <img src={qrDataUrl} alt="QR code to set up digital access" width={160} height={160} style={{ borderRadius: 8 }} />
+          ) : (
+            <div style={{ width: 160, height: 160, margin: '0 auto' }} />
+          )}
+          <p className="subtext" style={{ marginTop: 12, marginBottom: 0 }}>
+            Present QR code to customer to set up access for online banking.
+          </p>
         </div>
       )}
     </div>
