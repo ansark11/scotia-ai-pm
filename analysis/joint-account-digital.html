@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Impact Brief: Joint-Account Support — Digital Deposit Account Journey</title>
+<style>
+  @page { margin: 20mm 18mm; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #1a1a1a;
+    line-height: 1.55;
+    font-size: 11pt;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 17pt;
+    margin-bottom: 2pt;
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 8pt;
+  }
+  .subtitle {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 9pt;
+    color: #555;
+    margin-top: 4pt;
+    margin-bottom: 18pt;
+  }
+  h2 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13pt;
+    margin-top: 20pt;
+    margin-bottom: 6pt;
+    color: #7a1f2b;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4pt;
+  }
+  h3 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 11pt;
+    margin-top: 14pt;
+    margin-bottom: 4pt;
+  }
+  ul { margin-top: 4pt; padding-left: 20pt; }
+  li { margin-bottom: 6pt; }
+  code {
+    font-family: 'Courier New', monospace;
+    font-size: 9.5pt;
+    background: #f0f0f0;
+    padding: 1pt 4pt;
+    border-radius: 2pt;
+  }
+  .bottom-line {
+    background: #f5f2ea;
+    border-left: 3px solid #a8863a;
+    padding: 10pt 14pt;
+    margin-bottom: 8pt;
+    font-size: 10.5pt;
+  }
+  .whats-new {
+    background: #eef3f7;
+    border-left: 3px solid #3a6ea5;
+    padding: 8pt 14pt;
+    margin-top: 10pt;
+    font-size: 10pt;
+  }
+  .whats-new strong { color: #2a5075; }
+  .open-q {
+    background: #fdf0ef;
+    border-left: 3px solid #b23a2e;
+    padding: 4pt 14pt;
+    margin-top: 10pt;
+  }
+  .open-q li { margin-bottom: 10pt; }
+  .open-q strong { color: #7a1f2b; }
+  hr { border: none; border-top: 1px solid #ccc; margin: 22pt 0; }
+  .sources { font-family: Helvetica, Arial, sans-serif; font-size: 9pt; color: #666; }
+  .assumptions {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 9pt;
+    color: #555;
+    background: #f4f4f4;
+    padding: 8pt 12pt;
+    margin-bottom: 12pt;
+  }
+  .foundation {
+    background: #f5f2ea;
+    border-left: 3px solid #a8863a;
+    padding: 10pt 14pt;
+    margin-bottom: 10pt;
+  }
+  .foundation .size { font-family: Helvetica, Arial, sans-serif; font-weight: bold; color: #7a1f2b; }
+  table.effort {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+    margin-bottom: 10pt;
+  }
+  table.effort th {
+    font-family: Helvetica, Arial, sans-serif;
+    background: #7a1f2b;
+    color: white;
+    text-align: left;
+    padding: 6pt 8pt;
+    font-size: 9pt;
+  }
+  table.effort td {
+    padding: 6pt 8pt;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: top;
+  }
+  table.effort tr:nth-child(even) td { background: #faf8f4; }
+  .size-badge {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: bold;
+    padding: 2pt 6pt;
+    border-radius: 3pt;
+    background: #eee;
+    color: #333;
+    white-space: nowrap;
+  }
+  .new-badge {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 7.5pt;
+    font-weight: bold;
+    padding: 1pt 5pt;
+    border-radius: 3pt;
+    background: #3a6ea5;
+    color: #fff;
+    margin-left: 6pt;
+  }
+  .rollup {
+    background: #fdf0ef;
+    border-left: 3px solid #b23a2e;
+    padding: 8pt 14pt;
+    font-size: 10pt;
+  }
+</style>
+</head>
+<body>
+
+<h1>Impact Brief: Joint-Account Support — Digital Deposit Account Journey (Async Invite Model)</h1>
+<div class="subtitle">SYNTHETIC — demo only · Updated against the current 14-step digital journey after its UX redesign · UX pattern provided directly by the product owner</div>
+
+<h2>Proposed change</h2>
+<p>Two applicants open one joint account, but <strong>not</strong> in one sitting. User #1 completes the existing digital journey largely as-is, indicating partway through that this is a joint account and providing User #2's name and email. Once User #1 finishes, User #2 gets an emailed invite link into a separate, shorter flow to complete their own required steps. The account is pending until both are done.</p>
+
+<h2>Bottom line</h2>
+<div class="bottom-line">Still true from the original analysis: the hard part isn't redesigning existing steps to hold two applicants' data at once — nearly every step stays untouched for User #1. What's changed since the last version of this brief: (1) Confirmation is now a much richer screen, so the "invite sent" messaging needs to fit into a multi-section layout instead of one sentence; (2) Terms &amp; Conditions is now per-product agreement cards, raising a genuinely new question about a joint ownership agreement card; (3) this repo now has a <strong>working reference implementation</strong> of asynchronous device-linked identity verification — built for branch — which directly informs User #2's identity-verification step here.</div>
+
+<h2>Steps affected — User #1's journey</h2>
+
+<h3>Needs a change</h3>
+<ul>
+  <li><strong>Overview</strong> — same as before: a new capture point (joint-account toggle + User #2's name and email).</li>
+  <li><strong>Confirmation</strong> — now shows a card visual, a products-opened list, a balance box, and conditional card-delivery messaging, not a single paragraph. The "invite sent" messaging needs a place in this expanded layout — real UI work now, not just a sentence.</li>
+</ul>
+
+<h3>Unchanged</h3>
+<ul>
+  <li><strong>Phone number, Verify code, Profile setup, Verify identity (intro), Identity verification, Address info, Employment info, Credit card offer, Card added, Tax questions, Account agreements, Fund account</strong> — all unchanged for User #1. Several look different than in the last version of this brief (phone/OTP and identity verification are now two screens each; "Card added" didn't exist before; funding is now option cards; account agreements are now an accordion) — none of that changes the conclusion.</li>
+</ul>
+
+<h2>New: User #2's journey</h2>
+<ul>
+  <li><strong>New entry point</strong>, authenticated by an invite token.</li>
+  <li><strong>Reuses existing modules</strong>: DOB, phone number, address, employment info.</li>
+  <li><strong>Reuses as-is</strong>: Identity verification, Tax questions, Terms &amp; Conditions.</li>
+  <li><strong>Explicitly skipped</strong>: Credit card offer, Card added, Fund account.</li>
+  <li><strong>New confirmation variant</strong>.</li>
+</ul>
+<div class="whats-new"><strong>New since the last version:</strong> the branch journey now has a real, working remote identity-verification mechanism — a server-backed session, a token-linked device, polling for completion. User #2's identity-verification step is structurally similar and could extend that pattern rather than being built from scratch. They're not identical — branch assumes same-visit, real-time completion; this flow may complete hours or days later. Worth deciding explicitly whether these share one mechanism or stay separate.</div>
+
+<h2>New: cross-cutting system needs</h2>
+<ul>
+  <li><strong>Pending joint-completion state</strong> — still nothing in the data model represents this.</li>
+  <li><strong>Two new notification triggers</strong> — still no notification/event system exists.</li>
+  <li><strong>Invite token</strong> — securely links User #2's session to User #1's application.</li>
+</ul>
+<p style="font-size: 10pt; color: #555;">Same real-world engineering scope as before — a working reference pattern reduces design risk and uncertainty, not the actual production work (real email delivery, durable persistence, multi-day token lifetime are all still genuinely new).</p>
+
+<h2>Channels/segments impacted</h2>
+<ul>
+  <li>Scoped to digital, per direction from the product owner.</li>
+  <li>Sharper question than before: should this invite model and branch's remote-ID-V mechanism be unified into one shared capability, or are they legitimately different problems? This question didn't exist when only one of the two patterns existed in the repo.</li>
+</ul>
+
+<h2>Open questions for the business</h2>
+<div class="open-q">
+<ul>
+  <li><strong>Invite token lifetime</strong> — how long is the link valid, and what happens if it expires first?</li>
+  <li><strong>Non-completion handling</strong> — indefinite pending, revert to single-owner, or User #1 cancels/resends?</li>
+  <li><strong>Age gate for User #2</strong> — same 18+ minimum, or could a minor be a secondary holder?</li>
+  <li><strong>Phone verification for User #2</strong> — full OTP verification, or just captured as data?</li>
+  <li><strong>Ownership/liability model</strong> — full/equal rights immediately, or an interim restricted status?</li>
+  <li><strong>Identity cross-check</strong> — must User #2's identity match the invite, or can they correct it?</li>
+  <li><strong>Invite management</strong> — can User #1 cancel or resend?</li>
+  <li><strong>Shared mechanism with branch</strong><span class="new-badge">NEW</span> — reuse/extend branch's remote-ID-V pattern, or build separately?</li>
+  <li><strong>Joint ownership agreement card</strong><span class="new-badge">NEW</span> — does a joint account need its own agreement card in the new T&amp;C accordion, for User #2 to accept?</li>
+</ul>
+</div>
+
+<hr>
+
+<h2>Estimated effort (single developer)</h2>
+<div class="assumptions"><strong>Assumptions:</strong> real production feature, not a demo-repo prototype · 2-week sprints · business has already answered the open questions above before development starts.</div>
+
+<div class="foundation">
+<span class="size">Foundational — Invite/pending-state data model &amp; token handling</span><br>
+<strong>M — 2 to 3 sprints (4–6 weeks)</strong><br>
+Unchanged from the last version. The branch remote-ID-V build reduces uncertainty about how to shape this, but doesn't shrink the real work — production-grade email delivery and multi-day token persistence are still new.
+</div>
+
+<div class="foundation">
+<span class="size">Foundational — Notification triggers</span><br>
+<strong>S–M — 1 to 2 sprints (2–4 weeks)</strong><br>
+Unchanged. Two transactional email triggers and their templates.
+</div>
+
+<p style="font-family: Helvetica, Arial, sans-serif; font-size: 10pt; margin-bottom: 4pt;"><strong>Per-item, on top of the foundations:</strong></p>
+<table class="effort">
+<tr><th>Item</th><th>Size</th><th>Sprints</th><th>What's driving it</th></tr>
+<tr><td>Overview joint-intent capture</td><td><span class="size-badge">S</span></td><td>1</td><td>One new toggle + two new fields on an existing step.</td></tr>
+<tr><td>Confirmation messaging (User #1)</td><td><span class="size-badge">S</span></td><td>1</td><td>Grew from "bundled into a sentence" to standalone work — Confirmation is now a multi-section card layout.</td></tr>
+<tr><td>Account agreements — joint ownership card <em>(contingent)</em></td><td><span class="size-badge">S–M</span></td><td>1–2</td><td>New line item — didn't exist as a concept before T&amp;C became per-product agreement cards.</td></tr>
+<tr><td>User #2 entry point + flow</td><td><span class="size-badge">M</span></td><td>2–3</td><td>Unchanged in scope; the identity-verification portion carries less implementation risk given the existing token-linked-device pattern to extend.</td></tr>
+</table>
+
+<div class="rollup"><strong>Rollup: roughly 8–13 developer-sprints, or about 4–6.5 months of calendar time for one developer working alone.</strong> Up from ~6–9 sprints in the last version — the increase comes from Confirmation's added richness and the new contingent Terms &amp; Conditions line item, not from anything getting harder. A real team would still parallelize this and shorten calendar time.</div>
+
+<hr>
+<p class="sources"><strong>Sources used:</strong> existing-journeys/deposit-digital.json (14 steps), /modules/*.json, docs/rules/*.md, docs/rules/channels/digital.md, docs/rules/remote-identity-verification.md, client/src/context/JourneyContext.jsx, client/src/pages/Confirmation.jsx, client/src/pages/TermsAndConditions.jsx, client/src/pages/FundAccount.jsx, server/rules/*.js, server/data/mockDb.js, server/data/remoteIdvSessions.js. UX pattern provided directly by the product owner, not derived from the repo.</p>
+
+</body>
+</html>
