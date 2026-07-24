@@ -1,0 +1,10 @@
+{
+  "moduleId": "otp-verification",
+  "name": "OTP Verification",
+  "description": "SYNTHETIC. Verifies the one-time code sent by the phone-number step. Second of two phone-verification screens — no phone field shown here, only the code.",
+  "implementedAt": "client/src/pages/OtpVerify.jsx",
+  "backedBy": "server/rules/phone.js",
+  "appliesToChannels": ["digital", "branch", "contact-centre"],
+  "requiredFields": ["otp"],
+  "notes": "Runs immediately after phone-number. Replaces the old combined phone-otp module."
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import CTAButton from '../components/CTAButton.jsx'
+import BottomNav from '../components/BottomNav.jsx'
 import { useJourney } from '../context/JourneyContext.jsx'
 
 // Answers are captured as data only — no branching or gating logic acts on
@@ -59,7 +59,7 @@ export default function TaxQuestions() {
         I am a tax resident of a country other than Canada
       </label>
 
-      <CTAButton onClick={handleContinue}>Continue</CTAButton>
+      <BottomNav onNext={handleContinue} />
     </div>
   )
 }

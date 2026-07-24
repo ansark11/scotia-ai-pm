@@ -10,59 +10,76 @@
     },
     {
       "order": 2,
-      "module": "phone-otp",
+      "module": "phone-number",
       "required": true
     },
     {
       "order": 3,
-      "module": "profile-setup",
+      "module": "otp-verification",
       "required": true
     },
     {
       "order": 4,
-      "module": "identity-verification",
+      "module": "profile-setup",
       "required": true
     },
     {
       "order": 5,
-      "module": "address-info",
+      "module": "identity-intro",
       "required": true
     },
     {
       "order": 6,
-      "module": "employment-info",
+      "module": "identity-verification",
       "required": true
     },
     {
       "order": 7,
+      "module": "address-info",
+      "required": true
+    },
+    {
+      "order": 8,
+      "module": "employment-info",
+      "required": true
+    },
+    {
+      "order": 9,
       "module": "credit-cross-sell",
       "required": false,
       "conditional": true,
       "notes": "Only shown if server/rules/creditOffer.js eligibility check passes."
     },
     {
-      "order": 8,
+      "order": 10,
+      "module": "credit-card-added",
+      "required": false,
+      "conditional": true,
+      "notes": "Only shown if the credit card offer was accepted."
+    },
+    {
+      "order": 11,
       "module": "tax-questions",
       "required": true
     },
     {
-      "order": 9,
+      "order": 12,
       "module": "terms-and-conditions",
       "required": true
     },
     {
-      "order": 10,
+      "order": 13,
       "module": "fund-account",
       "required": true
     },
     {
-      "order": 11,
+      "order": 14,
       "module": "confirmation",
       "required": true
     }
   ],
   "metadata": {
-    "lastUpdated": "2026-07-18",
+    "lastUpdated": "2026-07-23",
     "owner": "Digital Onboarding Product Team (SYNTHETIC)"
   }
 }

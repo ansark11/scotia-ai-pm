@@ -1,42 +1,31 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FormField from '../components/FormField.jsx'
-import CTAButton from '../components/CTAButton.jsx'
+import BottomNav from '../components/BottomNav.jsx'
 import { useJourney } from '../context/JourneyContext.jsx'
 
-export default function PhoneOtp() {
+// SYNTHETIC. First of two phone-verification screens — phone number only.
+// See PhoneOtp's old combined version replaced by this + OtpVerify.jsx.
+export default function PhoneNumber() {
   const navigate = useNavigate()
   const { journeyData, updateJourneyData } = useJourney()
   const [phoneNumber, setPhoneNumber] = useState(journeyData.phoneNumber)
-  const [otp, setOtp] = useState(journeyData.otp)
-  const [codeSent, setCodeSent] = useState(false)
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  async function handleSendCode() {
+  async function handleNext() {
+    setLoading(true)
+    setError('')
     const res = await fetch('/api/phone/send-code', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ phoneNumber })
     })
     const result = await res.json()
+    setLoading(false)
     if (result.valid) {
-      setCodeSent(true)
-      setError('')
-    } else {
-      setError(result.reasons.join(' '))
-    }
-  }
-
-  async function handleVerify() {
-    const res = await fetch('/api/phone/verify-code', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ otp })
-    })
-    const result = await res.json()
-    if (result.verified) {
-      updateJourneyData({ phoneNumber, otp })
-      navigate('/profile')
+      updateJourneyData({ phoneNumber })
+      navigate('/otp')
     } else {
       setError(result.reasons.join(' '))
     }
@@ -48,15 +37,7 @@ export default function PhoneOtp() {
       <p className="subtext">We&apos;ll text you a one-time code to verify it&apos;s really you.</p>
       <FormField label="Mobile phone number" value={phoneNumber} onChange={setPhoneNumber} />
       {error && <div className="error-box">{error}</div>}
-      {!codeSent ? (
-        <CTAButton onClick={handleSendCode}>Send code</CTAButton>
-      ) : (
-        <>
-          <FormField label="6-digit code" value={otp} onChange={setOtp} />
-          <CTAButton onClick={handleVerify}>Verify & continue</CTAButton>
-          <p className="skip-note">Didn&apos;t get a code? Resend in 30s.</p>
-        </>
-      )}
+      <BottomNav onNext={handleNext} nextLabel="Send code" loading={loading} />
     </div>
   )
 }

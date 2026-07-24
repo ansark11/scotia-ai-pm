@@ -1,0 +1,8 @@
+{
+  "moduleId": "identity-intro",
+  "name": "Identity Verification Intro",
+  "description": "SYNTHETIC. Splash screen shown before the identity-verification form — sets expectations before asking for ID details. Captures no data of its own.",
+  "implementedAt": "client/src/pages/IdvIntro.jsx",
+  "appliesToChannels": ["digital", "branch", "contact-centre"],
+  "notes": "Runs immediately before identity-verification."
+}

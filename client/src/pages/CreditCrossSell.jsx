@@ -11,7 +11,7 @@ export default function CreditCrossSell() {
 
   function handleChoice(accepted) {
     updateJourneyData({ creditOfferAccepted: accepted })
-    navigate('/tax')
+    navigate(accepted ? '/credit-card-added' : '/tax')
   }
 
   return (

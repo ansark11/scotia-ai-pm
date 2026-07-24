@@ -10,7 +10,7 @@ Nothing in this repo is real bank code, real business rules, or real customer da
 
 ## Repo map
 
-- `client/` — React + Vite frontend, the 11-step digital deposit-account journey, dark mode + red accent design, every field pre-filled with mock data.
+- `client/` — React + Vite frontend, the 14-step digital deposit-account journey, dark mode + red accent design, every field pre-filled with mock data.
 - `server/` — Express mock backend; `server/rules/*.js` holds the real validation logic (age gate, identity expiry, employment branching, credit cross-sell gating, channel-aware funding).
 - `docs/rules/*.md` — plain-language mirror of each rule in `server/rules/`, plus `docs/rules/channels/digital.md` and `branch.md`.
 - `schema/journey-schema.json` — the future JSON-driven orchestration format.

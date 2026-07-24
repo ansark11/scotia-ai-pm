@@ -1,0 +1,10 @@
+{
+  "moduleId": "phone-number",
+  "name": "Phone Number",
+  "description": "SYNTHETIC. Captures the applicant's mobile number and triggers a one-time code. First of two phone-verification screens.",
+  "implementedAt": "client/src/pages/PhoneNumber.jsx",
+  "backedBy": "server/rules/phone.js",
+  "appliesToChannels": ["digital", "branch", "contact-centre"],
+  "requiredFields": ["phoneNumber"],
+  "notes": "Runs immediately before otp-verification. Replaces the old combined phone-otp module."
+}

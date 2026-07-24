@@ -33,7 +33,9 @@ comparisons/digital-vs-branch.pdf.
 
 ## What this should produce
 
-`comparisons/digital-vs-branch.md` (source) and `comparisons/digital-vs-branch.pdf` (the actual deliverable) — one markdown table, one row per step across the union of both journeys (14 rows: 11 shared steps + 3 branch-only steps), with columns roughly: step name, present in digital?, present in branch?, shared vs. channel-specific, and a plain-language rule difference note. The PDF should render in landscape with the badge styling above, not just a plain markdown table dump.
+`comparisons/digital-vs-branch.md` (source) and `comparisons/digital-vs-branch.pdf` (the actual deliverable) — one markdown table, one row per step across the union of both journeys, with columns roughly: step name, present in digital?, present in branch?, shared vs. channel-specific, and a plain-language rule difference note. The PDF should render in landscape with the badge styling above, not just a plain markdown table dump.
+
+**Note:** the row/step counts referenced below (11 shared + 3 = 14) were accurate when this sheet was written against the *original* 11-step digital journey. The digital journey has since had a UX redesign (now 14 steps) — this sheet needs a fresh pass, run alongside sheets 1 and 2, to re-derive the actual current counts rather than trust the numbers below.
 
 Two things worth double-checking in the output specifically, since they're easy to get wrong:
 

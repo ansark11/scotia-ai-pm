@@ -4,7 +4,10 @@ const applications = []
 
 function createApplication(data) {
   const accountNumber = `DEMO-${Math.floor(100000 + Math.random() * 900000)}`
-  const record = { accountNumber, createdAt: new Date().toISOString(), ...data }
+  const cardAccountNumber = data.creditOfferAccepted
+    ? `DEMO-CC-${Math.floor(100000 + Math.random() * 900000)}`
+    : null
+  const record = { accountNumber, cardAccountNumber, createdAt: new Date().toISOString(), ...data }
   applications.push(record)
   return record
 }

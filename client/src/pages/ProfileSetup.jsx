@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FormField from '../components/FormField.jsx'
-import CTAButton from '../components/CTAButton.jsx'
+import BottomNav from '../components/BottomNav.jsx'
 import { useJourney } from '../context/JourneyContext.jsx'
 
 export default function ProfileSetup() {
@@ -13,8 +13,7 @@ export default function ProfileSetup() {
   const [reasons, setReasons] = useState([])
   const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e) {
-    e.preventDefault()
+  async function handleNext() {
     setLoading(true)
     setReasons([])
     const res = await fetch('/api/profile/check-age', {
@@ -26,14 +25,14 @@ export default function ProfileSetup() {
     setLoading(false)
     if (result.eligible) {
       updateJourneyData({ fullName, dob, email })
-      navigate('/identity')
+      navigate('/identity-intro')
     } else {
       setReasons(result.reasons)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <h2>Profile setup</h2>
       <p className="subtext">Tell us a bit about yourself.</p>
       <FormField label="Full legal name" value={fullName} onChange={setFullName} />
@@ -46,9 +45,7 @@ export default function ProfileSetup() {
           ))}
         </div>
       )}
-      <CTAButton type="submit" disabled={loading}>
-        {loading ? 'Checking...' : 'Continue'}
-      </CTAButton>
-    </form>
+      <BottomNav onNext={handleNext} loading={loading} />
+    </div>
   )
 }

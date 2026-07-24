@@ -44,7 +44,7 @@ need to reflect it too).
 
 ## How to verify it worked
 
-1. `http://localhost:5173/` (digital entry) still behaves exactly as before — same 11 steps, transfer-only funding, no FA mentions anywhere.
+1. `http://localhost:5173/` (digital entry) still behaves exactly as before — same 14 steps (as of the digital journey's UX redesign), transfer/e-transfer/cheque funding, no FA mentions anywhere. If this sheet drifts from the digital journey's actual current shape again, update this checklist to match rather than assume.
 2. `http://localhost:5173/fa-login` (or whatever route it created) starts the new flow — fill it in, continue to Overview.
 3. Progress indicator step count is higher than digital's.
 4. Terms & Conditions leads to the client e-signature step, then the FA e-signature step — not straight to Fund Account.

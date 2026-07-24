@@ -2,21 +2,24 @@
 
 A real, running fake-bank onboarding web app — frontend, backend, dark-mode red-accent design system, and business rules — built to demonstrate what workspace-aware AI can do that Copilot Web cannot. Everything here (the bank, the journey, the rules, the data) is invented for this demo. No real code, data, or business rules are included. The credit card red is an approximation of a brand color, not a verified hex.
 
-Every screen is pre-filled with mock data so you can click through the entire 11-step journey quickly. All fields remain editable.
+Every screen is pre-filled with mock data so you can click through the entire 14-step journey quickly. All fields remain editable.
 
-## The journey (11 steps)
+## The journey (14 steps)
 
 1. Overview
-2. Phone number + OTP
-3. Profile setup
-4. Identity verification
-5. Address info
-6. Employment info (branches by employment status)
-7. Credit card offer — **conditional**: only shown if the applicant qualifies (see `docs/rules/credit-cross-sell.md`). The pre-filled default data qualifies, so you'll see it by default. Lower "Annual income" below $24,000 in Employment info, or change employment status to Student/Retired/Unemployed, to see the skip path instead.
-8. Tax questions
-9. Terms & conditions
-10. Fund account
-11. Confirmation
+2. Phone number
+3. Verify code (OTP)
+4. Profile setup
+5. Verify identity (intro)
+6. Identity verification
+7. Address info
+8. Employment info (branches by employment status)
+9. Credit card offer — **conditional**: only shown if the applicant qualifies (see `docs/rules/credit-cross-sell.md`). The pre-filled default data qualifies, so you'll see it by default. Lower "Annual income" below $24,000 in Employment info, or change employment status to Student/Retired/Unemployed, to see the skip path instead.
+10. Card added — **conditional**: only shown if the credit card offer was accepted; auto-advances after ~2 seconds.
+11. Tax questions
+12. Account agreements (Terms & conditions)
+13. Fund account
+14. Confirmation
 
 ## What's in here
 
@@ -24,9 +27,9 @@ Every screen is pre-filled with mock data so you can click through the entire 11
 deposit-account-onboarding/
 ├── client/                  React + Vite frontend (npm run dev)
 │   └── src/
-│       ├── components/      TopBar, FormField, CTAButton, CreditCardVisual
-│       ├── pages/           11 journey screens, one page each
-│       └── context/         JourneyContext — 11-step list + pre-filled mock data
+│       ├── components/      TopBar, BottomNav, FormField, CTAButton, CreditCardVisual, AccountCardVisual
+│       ├── pages/           14 journey screens, one page each
+│       └── context/         JourneyContext — 14-step list + pre-filled mock data
 ├── server/                  Express mock backend (npm start)
 │   ├── rules/               real business-rule validation logic, one file per rule area
 │   └── data/                in-memory mock "database"

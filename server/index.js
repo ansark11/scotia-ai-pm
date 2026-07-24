@@ -48,7 +48,7 @@ app.post('/api/funding', (req, res) => {
 
 app.post('/api/application', (req, res) => {
   const record = createApplication(req.body)
-  res.json({ accountNumber: record.accountNumber })
+  res.json({ accountNumber: record.accountNumber, cardAccountNumber: record.cardAccountNumber })
 })
 
 const PORT = process.env.PORT || 4000

@@ -10,4 +10,4 @@ Applicant qualifies only if **all** of the following hold:
 
 If qualifying, the displayed credit limit is calculated as 20% of annual income, capped at $15,000, rounded to the nearest $100.
 
-If the applicant accepts the offer, Confirmation notes that a physical card is on its way (5-7 business days). If they skip it, or never saw it, Confirmation makes no mention of a card.
+If the applicant accepts the offer, a moment-of-delight transition screen ("Your card has been added") plays for about 2 seconds before automatically continuing to Tax questions. If they skip it, or never saw it, the journey continues straight to Tax questions with no transition. Either way, Confirmation notes a physical card is on its way (5-7 business days) only when the offer was accepted; otherwise it makes no mention of a card.

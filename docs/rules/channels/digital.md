@@ -5,5 +5,5 @@ Applies to self-serve onboarding completed by the client with no banker present.
 - Phone + OTP is the applicant's identity/MFA channel throughout the session.
 - Identity verification is document capture + liveness check (mocked). No staff attestation exists in this channel.
 - Consent is captured via checkbox + timestamp (Terms & conditions step) — no e-signature.
-- Funding supports transfer from a linked account only (see `server/rules/funding.js`).
+- Funding supports transfer from a linked account, Interac e-Transfer, or cheque deposit (see `server/rules/funding.js` and `docs/rules/fund-account.md`).
 - There is no banker involved anywhere in this journey.

@@ -1,9 +1,0 @@
-{
-  "moduleId": "phone-otp",
-  "name": "Phone & OTP",
-  "description": "SYNTHETIC. Captures phone number and verifies a one-time code.",
-  "implementedAt": "client/src/pages/PhoneOtp.jsx",
-  "backedBy": "server/rules/phone.js",
-  "appliesToChannels": ["digital", "branch", "contact-centre"],
-  "requiredFields": ["phoneNumber", "otp"]
-}

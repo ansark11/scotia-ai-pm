@@ -3,16 +3,20 @@ import { createContext, useContext, useState } from 'react'
 // SYNTHETIC. Ordered steps for the digital deposit-account journey.
 // Note: "Credit offer" is only ever visited by applicants who pass the
 // eligibility check in EmploymentInfo — see docs/rules/credit-cross-sell.md.
+// "Card added" is only ever visited if that offer was accepted.
 export const JOURNEY_STEPS = [
   { path: '/overview', label: 'Overview' },
-  { path: '/phone-otp', label: 'Phone & OTP' },
+  { path: '/phone', label: 'Phone number' },
+  { path: '/otp', label: 'Verify code' },
   { path: '/profile', label: 'Profile setup' },
+  { path: '/identity-intro', label: 'Verify identity' },
   { path: '/identity', label: 'Identity verification' },
   { path: '/address', label: 'Address info' },
   { path: '/employment', label: 'Employment info' },
   { path: '/credit-offer', label: 'Credit card offer' },
+  { path: '/credit-card-added', label: 'Card added' },
   { path: '/tax', label: 'Tax questions' },
-  { path: '/terms', label: 'Terms & conditions' },
+  { path: '/terms', label: 'Account agreements' },
   { path: '/fund', label: 'Fund account' },
   { path: '/confirmation', label: 'Confirmation' }
 ]

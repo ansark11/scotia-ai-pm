@@ -1,0 +1,9 @@
+{
+  "moduleId": "credit-card-added",
+  "name": "Card Added",
+  "description": "SYNTHETIC. Moment-of-delight transition shown only if the credit card cross-sell offer was accepted — auto-advances to tax-questions. Captures no data; carries no business rule of its own.",
+  "implementedAt": "client/src/pages/CreditCardDelight.jsx",
+  "appliesToChannels": ["digital", "branch", "contact-centre"],
+  "conditional": true,
+  "notes": "Only shown if creditOfferAccepted is true, following credit-cross-sell."
+}

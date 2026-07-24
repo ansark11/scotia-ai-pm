@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FormField from '../components/FormField.jsx'
-import CTAButton from '../components/CTAButton.jsx'
+import BottomNav from '../components/BottomNav.jsx'
 import { useJourney } from '../context/JourneyContext.jsx'
 
 const PROVINCES = ['ON', 'BC', 'AB', 'QC', 'MB', 'NS', 'NB', 'SK', 'PE', 'NL'].map((p) => ({
@@ -19,8 +19,7 @@ export default function AddressInfo() {
   const [reasons, setReasons] = useState([])
   const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e) {
-    e.preventDefault()
+  async function handleNext() {
     setLoading(true)
     setReasons([])
     const res = await fetch('/api/address/validate', {
@@ -39,7 +38,7 @@ export default function AddressInfo() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <h2>Address info</h2>
       <p className="subtext">Where do you currently live?</p>
       <FormField label="Street address" value={addressLine} onChange={setAddressLine} />
@@ -53,9 +52,7 @@ export default function AddressInfo() {
           ))}
         </div>
       )}
-      <CTAButton type="submit" disabled={loading}>
-        {loading ? 'Checking...' : 'Continue'}
-      </CTAButton>
-    </form>
+      <BottomNav onNext={handleNext} loading={loading} />
+    </div>
   )
 }

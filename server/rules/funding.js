@@ -1,10 +1,11 @@
 // SYNTHETIC business rule logic, demo purposes only.
-// Already channel-aware: digital only allows transfer; branch would allow
-// cash/cheque too (see docs/rules/channels/branch.md, for a future demo).
+// Channel-aware: digital allows transfer, e-transfer, or cheque deposit;
+// branch allows transfer, cash, or cheque (see docs/rules/fund-account.md
+// and docs/rules/channels/branch.md).
 
 function validateFunding({ fundingMethod, fundingAmount }, channel = 'digital') {
   const reasons = []
-  const allowedMethods = channel === 'branch' ? ['transfer', 'cash', 'cheque'] : ['transfer']
+  const allowedMethods = channel === 'branch' ? ['transfer', 'cash', 'cheque'] : ['transfer', 'e-transfer', 'cheque']
 
   if (!allowedMethods.includes(fundingMethod)) {
     reasons.push(`Funding method "${fundingMethod}" is not supported on the ${channel} channel.`)

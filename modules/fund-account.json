@@ -6,5 +6,5 @@
   "backedBy": "server/rules/funding.js",
   "appliesToChannels": ["digital", "branch", "contact-centre"],
   "requiredFields": ["fundingMethod", "fundingAmount"],
-  "notes": "Already channel-aware: branch unlocks cash/cheque in addition to transfer."
+  "notes": "Channel-aware: digital offers transfer, e-transfer, or cheque deposit; branch offers transfer, cash, or cheque. Presented as selectable option cards, not a dropdown — see docs/rules/fund-account.md."
 }

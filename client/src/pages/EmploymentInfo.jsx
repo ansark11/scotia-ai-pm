@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FormField from '../components/FormField.jsx'
-import CTAButton from '../components/CTAButton.jsx'
+import BottomNav from '../components/BottomNav.jsx'
 import { useJourney } from '../context/JourneyContext.jsx'
 
 const STATUS_OPTIONS = [
@@ -28,8 +28,7 @@ export default function EmploymentInfo() {
   // Employment info always continues — the credit cross-sell gating rule
   // (server/rules/creditOffer.js) decides, on submit, whether this
   // applicant ever sees /credit-offer at all. See docs/rules/credit-cross-sell.md.
-  async function handleSubmit(e) {
-    e.preventDefault()
+  async function handleNext() {
     setLoading(true)
     updateJourneyData({
       employmentStatus,
@@ -51,7 +50,7 @@ export default function EmploymentInfo() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <h2>Employment info</h2>
       <p className="subtext">This helps us understand your financial picture.</p>
       <FormField
@@ -100,9 +99,7 @@ export default function EmploymentInfo() {
         />
       )}
 
-      <CTAButton type="submit" disabled={loading}>
-        {loading ? 'Checking...' : 'Continue'}
-      </CTAButton>
-    </form>
+      <BottomNav onNext={handleNext} loading={loading} />
+    </div>
   )
 }

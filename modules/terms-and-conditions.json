@@ -1,9 +1,9 @@
 {
   "moduleId": "terms-and-conditions",
   "name": "Terms & Conditions",
-  "description": "SYNTHETIC. Product terms + provincial disclosures; requires consent checkbox.",
+  "description": "SYNTHETIC. Displayed as collapsible agreement cards, each with its own checkbox: a chequing account agreement (always), plus a credit card agreement (only if the cross-sell offer was accepted).",
   "implementedAt": "client/src/pages/TermsAndConditions.jsx",
   "appliesToChannels": ["digital", "branch", "contact-centre"],
   "requiredFields": ["termsAccepted"],
-  "notes": "Digital captures consent via checkbox + timestamp. Branch channel requires e-signature instead — see docs/rules/channels/branch.md."
+  "notes": "Digital captures consent via checkbox + timestamp, one checkbox per visible agreement card. Branch channel requires e-signature instead — see docs/rules/channels/branch.md."
 }

@@ -6,5 +6,5 @@
   "backedBy": "server/rules/identity.js",
   "appliesToChannels": ["digital", "branch", "contact-centre"],
   "requiredFields": ["idType", "idNumber", "idExpiry"],
-  "notes": "Digital channel mocks document scan + liveness check. Branch channel is expected to swap this to physical ID review — see docs/rules/channels/branch.md."
+  "notes": "Digital channel mocks document scan + liveness check. Branch channel is expected to swap this to physical ID review — see docs/rules/channels/branch.md. Now reached via the identity-intro splash screen, not directly from profile-setup."
 }
