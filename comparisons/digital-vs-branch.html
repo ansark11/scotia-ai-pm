@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Journey Comparison: Digital vs. Branch-Assisted</title>
+<style>
+  @page { margin: 14mm 12mm; size: landscape; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #1a1a1a;
+    line-height: 1.45;
+    font-size: 9.5pt;
+    max-width: 1050px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 17pt;
+    margin-bottom: 2pt;
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 6pt;
+  }
+  .subtitle {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 9pt;
+    color: #555;
+    margin-top: 4pt;
+    margin-bottom: 6pt;
+  }
+  .intro { font-size: 10pt; margin-bottom: 12pt; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9pt;
+    margin-bottom: 14pt;
+  }
+  th {
+    font-family: Helvetica, Arial, sans-serif;
+    background: #7a1f2b;
+    color: white;
+    text-align: left;
+    padding: 6pt 7pt;
+    font-size: 8.5pt;
+  }
+  td {
+    padding: 6pt 7pt;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #faf8f4; }
+  .dash { color: #bbb; text-align: center; }
+  .check { color: #2f7a3d; font-weight: bold; text-align: center; }
+  .badge {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 7.5pt;
+    padding: 2pt 6pt;
+    border-radius: 3pt;
+    white-space: nowrap;
+  }
+  .shared { background: #e8f0e8; color: #2f5a35; }
+  .shared-diff { background: #fdf6e3; color: #8a6d1a; }
+  .digital-only { background: #eef3f7; color: #2a5075; }
+  .branch-only { background: #fdf0ef; color: #7a1f2b; }
+  h2 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12pt;
+    color: #7a1f2b;
+    margin-top: 14pt;
+    margin-bottom: 6pt;
+  }
+  .whats-new {
+    background: #eef3f7;
+    border-left: 3px solid #3a6ea5;
+    padding: 6pt 12pt;
+    font-size: 9pt;
+    margin-top: 6pt;
+  }
+  ul { margin-top: 4pt; }
+  li { margin-bottom: 3pt; }
+  code { font-family: 'Courier New', monospace; font-size: 8.5pt; background: #f0f0f0; padding: 1pt 4pt; border-radius: 2pt; }
+  .sources { font-family: Helvetica, Arial, sans-serif; font-size: 8pt; color: #666; margin-top: 10pt; }
+</style>
+</head>
+<body>
+
+<h1>Journey Comparison: Digital vs. Branch-Assisted</h1>
+<div class="subtitle">SYNTHETIC — demo only</div>
+<p class="intro">Comparing <code>existing-journeys/deposit-digital.json</code> (14 steps) and <code>existing-journeys/deposit-branch.json</code> (17 steps). 12 steps are the exact same module reused as-is. 2 steps are digital-only. 5 steps are branch-only. 3 of the shared steps carry a rule difference even though the step itself is the same module.</p>
+
+<table>
+<tr><th>Step</th><th>Digital</th><th>Branch</th><th>Category</th><th>Note</th></tr>
+<tr><td>FA login</td><td class="dash">—</td><td class="check">✓</td><td><span class="badge branch-only">Branch-only</span></td><td>No digital equivalent — establishes which banker and client the session is for before anything else starts.</td></tr>
+<tr><td>Overview</td><td class="check">✓</td><td class="check">✓</td><td><span class="badge shared">Shared</span></td><td>None.</td></tr>
+<tr><td>Phone number</td><td class="check">✓</td><td class="check">✓</td><td><span class="badge shared">Shared</span></td><td>None.</td></tr>
+<tr><td>Verify code (OTP)</td><td class="check">✓</td><td class="check">✓</td><td><span class="badge shared">Shared</span></td><td>None.</td></tr>
+<tr><td>Profile setup</td><td class="check">✓</td><td class="check">✓</td><td><span class="badge shared">Shared</span></td><td>None.</td></tr>
+<tr><td>Verify identity (intro)</td><td class="check">✓</td><td class="dash">—</td><td><span class="badge digital-only">Digital-only</span></td><td>Not a variant — branch doesn't use this splash screen at all. Replaced entirely by the remote hand-off below.</td></tr>
+<tr><td>Identity verification (form)</td><td class="check">✓</td><td class="dash">—</td><td><span class="badge digital-only">Digital-only</span></td><td>Same reasoning — branch never reaches this page.</td></tr>
+<tr><td>Verify identity (remote, FA view)</td><td class="dash">—</td><td class="check">✓</td><td><span class="badge branch-only">Branch-only</span></td><td>The customer must complete ID-V on their own device — this screen sends a link and polls for completion.</td></tr>
+<tr><td>Identity verified (remote)</td><td class="dash">—</td><td class="check">✓</td><td><span class="badge branch-only">Branch-only</span></td><td>Animated confirmation once the customer finishes on their own device; auto-advances.</td></tr>
+<tr><td>Address info</td><td class="check">✓</td><td class="check">✓</td><td><span class="badge shared">Shared</span></td><td>None.</td></tr>
+<tr><td>Employment info</td><td class="check">✓</td><td class="check">✓</td><td><span class="badge shared">Shared</span></td><td>None.</td></tr>
+<tr><td>Credit card offer <em>(cond.)</em></td><td class="check">✓</td><td class="check">✓</td><td><span class="badge shared">Shared</span></td><td>None — same eligibility rule, same gating, both channels.</td></tr>
+<tr><td>Card added <em>(cond.)</em></td><td class="check">✓</td><td class="check">✓</td><td><span class="badge shared">Shared</span></td><td>None — same animation, same trigger, both channels.</td></tr>
+<tr><td>Tax questions</td><td class="check">✓</td><td class="check">✓</td><td><span class="badge shared">Shared</span></td><td>None.</td></tr>
+<tr><td>Account agreements</td><td class="check">✓</td><td class="check">✓</td><td><span class="badge shared-diff">Shared, rule differs</span></td><td>Same accordion + checkboxes on both. Branch follows with two e-signatures — checkboxes alone aren't sufficient there.</td></tr>
+<tr><td>Client e-signature</td><td class="dash">—</td><td class="check">✓</td><td><span class="badge branch-only">Branch-only</span></td><td>No digital equivalent — digital's consent is the account-agreement checkboxes alone.</td></tr>
+<tr><td>FA e-signature</td><td class="dash">—</td><td class="check">✓</td><td><span class="badge branch-only">Branch-only</span></td><td>No digital equivalent — no banker present on digital.</td></tr>
+<tr><td>Fund account</td><td class="check">✓</td><td class="check">✓</td><td><span class="badge shared-diff">Shared, rule differs</span></td><td>Digital: transfer, e-Transfer, or cheque. Branch: transfer, cash, or cheque — no e-Transfer.</td></tr>
+<tr><td>Confirmation</td><td class="check">✓</td><td class="check">✓</td><td><span class="badge shared-diff">Shared, rule differs</span></td><td>Branch additionally names the assisting FA and shows a QR code + infotip for online banking setup.</td></tr>
+</table>
+
+<h2>Summary</h2>
+<ul>
+  <li><strong>Shared, no rule difference (9):</strong> Overview, Phone number, Verify code, Profile setup, Address info, Employment info, Credit card offer, Card added, Tax questions.</li>
+  <li><strong>Shared, rule differs (3):</strong> Account agreements, Fund account, Confirmation.</li>
+  <li><strong>Digital-only (2):</strong> Verify identity (intro), Identity verification (form).</li>
+  <li><strong>Branch-only (5):</strong> FA login, Verify identity (remote, FA view), Identity verified (remote), Client e-signature, FA e-signature.</li>
+</ul>
+<div class="whats-new"><strong>New since the last version of this comparison:</strong> the "digital-only" category didn't exist before — identity verification used to be reused as-is on both channels. It no longer is: branch replaced it with an entirely different, cross-device mechanism rather than a channel-aware variant of the same page.</div>
+
+<p class="sources"><strong>Sources used:</strong> existing-journeys/deposit-digital.json, existing-journeys/deposit-branch.json, /modules/*.json, docs/rules/channels/digital.md, docs/rules/channels/branch.md, docs/rules/credit-cross-sell.md, docs/rules/remote-identity-verification.md</p>
+
+</body>
+</html>

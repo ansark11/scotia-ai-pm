@@ -1,56 +1,60 @@
 # Instruction Sheet 2 — Generate the Branch Journey JSON
 
-Live-demo version of "Demo 2" in `DEMO-SCRIPT.md`. Run this **after** Instruction Sheet 1's prototype is built and validated — this step describes that same journey as structured data instead of pages.
+Live-demo version of "Demo 2" in `DEMO-SCRIPT.md`. **Changed since this sheet was first written:** the branch-assisted journey is no longer something built fresh in the same session — it's now permanent, already-built code on `main` (FA login, a remote identity-verification hand-off, dual e-signature, channel-aware funding, a QR code on confirmation). So this demo is no longer "generate something new that doesn't exist yet" — it's "read the actual, already-built branch app and produce an accurate structured description of it." That's arguably a better demo: reverse-engineering a real, non-trivial implementation (conditional steps, a cross-device hand-off, dependency chains) into clean structured data is a stronger proof point than describing something simple from a rules doc.
+
+Can run independently — doesn't depend on Instruction Sheet 1 having just run in the same session.
 
 ## Before you start
 
-- The branch-assisted prototype from Instruction Sheet 1 should already exist in the working tree (same branch, still uncommitted or committed — either is fine).
 - Confirm `schema/journey-schema.json`, the files in `/modules`, and `existing-journeys/deposit-digital.json` are present — they're the pattern this step follows.
+- `existing-journeys/deposit-branch.json` already exists on `main` — that's expected. The point of running this live is watching Claude Code independently re-derive it from the actual app and get the same (correct) answer, not creating it from nothing.
 
 ## The prompt
 
 Paste this into Claude Code:
 
 ```
-Using schema/journey-schema.json and the module files in /modules as a
-pattern, generate a journey JSON for the branch-assisted deposit account
-journey we just built, called deposit-account-branch, saved to
-existing-journeys/deposit-branch.json. Reuse existing modules for steps that
-didn't change, including the conditional credit-cross-sell module. Create
-new module definition files, following the same format as the existing
-ones, for the FA login step and for the two e-signature steps, with their
-requiredFields based on the actual data those pages capture.
+Read the current branch-assisted deposit account journey directly from the
+codebase — client/src/App.jsx, the JOURNEY_STEPS_BRANCH list in
+client/src/context/JourneyContext.jsx, and the branch-specific pages under
+client/src/pages/ (FaLogin, IdvRemoteFa, IdvRemoteComplete, EsignClient,
+EsignFa). Using schema/journey-schema.json and the module files in /modules
+as the pattern, produce or refresh existing-journeys/deposit-branch.json —
+journeyId deposit-account-branch, channel branch — matching what the app
+actually does today, in the same order. Reuse existing module references for
+steps unchanged from digital, including the conditional credit-cross-sell
+and credit-card-added modules. Confirm the branch-only module files
+(fa-login, idv-remote-fa, idv-remote-complete, esign-client, esign-fa)
+still accurately describe those pages, updating them if anything has
+drifted from the real implementation.
 
-Where a step in the branch journey depends on a specific prior step
-completing — not just its position in the list — add an explicit dependsOn
-field naming that prior step's module (e.g. the FA's e-signature depends on
-the client's; funding depends on both signatures existing). Add dependsOn
-as a new optional field to schema/journey-schema.json if it isn't already
-there, without breaking validation of the existing digital journey.
+Where a step depends on a specific prior step completing — not just its
+position in the list — add an explicit dependsOn field naming that prior
+step's module (e.g. Overview depends on fa-login; the FA's e-signature
+depends on the client's; funding depends on both signatures existing).
 
-Format every step object the same way existing-journeys/deposit-digital.json
-already does: one field per line, not a single-line object, even for steps
-with only two or three fields.
+Format every step object one field per line, matching the existing
+convention in existing-journeys/deposit-digital.json.
 
 Validate the resulting JSON against the schema when done.
 ```
 
 ## What this should produce
 
-- `existing-journeys/deposit-branch.json` — `journeyId: "deposit-account-branch"`, `channel: "branch"`, all 14 steps in order.
-- Three new files under `/modules`: FA login, client e-signature, FA e-signature — same shape as the existing module files (`moduleId`, `name`, `description`, `implementedAt`, `appliesToChannels`, `requiredFields`).
-- `schema/journey-schema.json` gets one new optional field (`dependsOn`) — additive only, shouldn't break the existing digital journey.
-- `dependsOn` should appear only where there's a real named business rule (FA login before Overview, FA signs after client, funding after both signatures) — not on every single step.
-- Every step object formatted one field per line, matching `existing-journeys/deposit-digital.json` — not compact single-line objects.
+- `existing-journeys/deposit-branch.json` — `journeyId: "deposit-account-branch"`, `channel: "branch"`, all 17 steps in order: fa-login, overview, phone-number, otp-verification, profile-setup, idv-remote-fa, idv-remote-complete, address-info, employment-info, credit-cross-sell (conditional), credit-card-added (conditional), tax-questions, terms-and-conditions, esign-client, esign-fa, fund-account, confirmation.
+- Five branch-only module files confirmed accurate (or corrected if drifted): `fa-login.json`, `idv-remote-fa.json`, `idv-remote-complete.json`, `esign-client.json`, `esign-fa.json`.
+- `dependsOn` present on: overview (depends on fa-login), idv-remote-complete (depends on idv-remote-fa), esign-fa (depends on esign-client), fund-account (depends on esign-fa) — not on every step.
+- Every step object formatted one field per line.
 
 ## How to verify it worked
 
-1. `existing-journeys/deposit-digital.json` still validates against the updated schema (nothing broke for the existing journey).
-2. The new `existing-journeys/deposit-branch.json` validates against the schema. Quick check:
+1. `existing-journeys/deposit-digital.json` still validates against the schema (nothing broke for the existing journey).
+2. The (re)generated `existing-journeys/deposit-branch.json` validates too:
    ```
    npx --yes -p ajv-cli ajv validate -s schema/journey-schema.json -d existing-journeys/deposit-branch.json --spec=draft7
    npx --yes -p ajv-cli ajv validate -s schema/journey-schema.json -d existing-journeys/deposit-digital.json --spec=draft7
    ```
-3. Open the new file and confirm it reads sensibly to a non-technical reviewer — this is the artifact you'd actually show on screen.
+3. Step count is 17, in the order above — not 14 (that was the count before FA login, remote ID-V, and dual e-signature existed) and not the digital journey's 14.
+4. Open the file and confirm it reads sensibly to a non-technical reviewer — this is the artifact you'd actually show on screen.
 
-If this doesn't come out clean and you're short on time, the reference copy is in `existing-journeys/deposit-branch.json` and `/modules/fa-login.json`, `/modules/esign-client.json`, `/modules/esign-fa.json` on the `demo/branch-assisted-fa` fallback branch.
+If this doesn't come out clean and you're short on time, the reference copy is `impact-briefs/deposit-branch.json` and `impact-briefs/module-*.json` (fa-login, idv-remote-fa, idv-remote-complete, esign-client, esign-fa).

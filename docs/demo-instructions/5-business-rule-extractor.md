@@ -1,6 +1,6 @@
 # Instruction Sheet 5 — Business Rule Extractor
 
-Live-demo version of "Demo 5" in `CLAUDE.md`. Independent of demos 1-4 — this one only reads the existing **digital** journey (code + docs), so it can run on a clean `main` with no prior setup.
+Live-demo version of "Demo 5" in `CLAUDE.md`. Independent of the other sheets — this one only reads the existing **digital** journey (code + docs), so it can run on a clean `main` with no prior setup.
 
 ## Before you start
 
@@ -17,13 +17,13 @@ Paste this into Claude Code — one prompt, markdown and PDF both:
 
 ```
 Read every rule that governs the digital deposit account journey:
-server/rules/*.js, docs/rules/*.md, and any inline business logic in
-client/src/pages/*.jsx (required fields, what happens on validation
-failure, which steps are conditional). Consolidate all of it into a single
-business-rules/deposit-account-digital.md file, organized by journey step,
-written in plain language, with a note on where each rule lives in the
-codebase. Flag anything that reads as a rule but isn't explicitly stated
-anywhere, rather than guessing at it.
+server/rules/*.js, server/data/*.js, docs/rules/*.md, and any inline
+business logic in client/src/pages/*.jsx (required fields, what happens on
+validation failure, which steps are conditional). Consolidate all of it
+into a single business-rules/deposit-account-digital.md file, organized by
+journey step, written in plain language, with a note on where each rule
+lives in the codebase. Flag anything that reads as a rule but isn't
+explicitly stated anywhere, rather than guessing at it.
 
 Then convert that markdown into a styled HTML file and render it to PDF
 using headless Chrome print-to-pdf — this is a leadership-facing
@@ -39,21 +39,21 @@ business-rules/deposit-account-digital.pdf.
 
 ## What this should produce
 
-`business-rules/deposit-account-digital.md` (source) and `business-rules/deposit-account-digital.pdf` (the actual deliverable), one section per journey step (11 sections — Overview through Confirmation), each rule written in plain language with a source pointer back to the actual file(s) it lives in. A closing summary of anything flagged as a mismatch or gap. The PDF should carry the trust-caveat callout and per-flag callouts, not be a plain unstyled dump.
+`business-rules/deposit-account-digital.md` (source) and `business-rules/deposit-account-digital.pdf` (the actual deliverable), one section per journey step (**14 sections** — Overview through Confirmation), each rule written in plain language with a source pointer back to the actual file(s) it lives in. A closing summary of anything flagged as a mismatch or gap.
 
-Specific things a good run should catch, since they're genuinely present in this repo (not hypothetical):
+Specific things a good run should catch, since they're genuinely present in this repo today (not hypothetical):
 
-- **Phone & OTP and Fund account have rules that exist only in code** — `server/rules/phone.js` and `server/rules/funding.js` have no `docs/rules/*.md` mirror, unlike every other rule area.
-- **Terms & conditions has no server-side validation at all** — consent is enforced only by the Continue button staying disabled client-side, unlike every other step which has a backing `/api/*` check.
+- **Account agreements has no server-side validation at all** — consent is enforced only by the Continue button staying disabled client-side, unlike every other step which has a backing `/api/*` check.
+- **Confirmation generates a second, credit-card-specific account number** (`cardAccountNumber` in `server/data/mockDb.js`) whenever the credit offer was accepted — this exists only in code, with no mirror in `docs/rules/credit-cross-sell.md` or anywhere else.
 
-Two mismatches from an earlier dry run of this demo (identity verification's name-matching claim, and employment info's "defaults to $0" claim) have since been fixed at the source — `server/rules/identity.js` now implements full name + email + phone matching (not name alone), and `docs/rules/employment-info.md` no longer makes the unimplemented $0-default claim. A correct run today should **not** flag those two anymore; if it does, the docs and code have likely drifted again since.
+Two mismatches from earlier runs of this demo — Phone & OTP and Fund account having no `docs/rules/*.md` mirror — have since been closed: `docs/rules/phone-otp.md` and `docs/rules/fund-account.md` both exist now. A correct run today should **not** flag those two anymore; if it does, the docs and code have drifted again since.
 
 ## How to verify it worked
 
-1. All 11 digital journey steps are represented, in order.
+1. All 14 digital journey steps are represented, in order (not 11 — that was the step count before the journey's UX redesign).
 2. Every rule cites a real file path — spot-check 2-3 against the actual source to confirm it's not paraphrased or invented.
-3. Confirm the two remaining items above (or equivalent genuine mismatches) show up as explicit flags, not silently smoothed over or guessed at.
+3. Confirm the two current items above (or equivalent genuine mismatches) show up as explicit flags, not silently smoothed over or guessed at — and that the two closed ones don't reappear.
 4. Read it as the non-technical audience — does each rule make sense without opening any code?
 5. The PDF should actually open and render — headless Chrome print-to-pdf can silently produce a blank or malformed file if the HTML has an error; open it and check before treating it as done.
 
-If it misses the doc/code mismatches above and just describes the code cleanly with no flags, that's a miss worth catching live — the entire point of this demo is proving it doesn't blindly trust either source on its own.
+If it misses the mismatches above and just describes the code cleanly with no flags, that's a miss worth catching live — the entire point of this demo is proving it doesn't blindly trust either source on its own. If you're short on time, the reference copy is `impact-briefs/deposit-account-digital-business-rules.md` and `impact-briefs/deposit-account-digital-business-rules.pdf`.

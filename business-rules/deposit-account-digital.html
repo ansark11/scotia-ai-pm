@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Business Rules: Digital Deposit Account Journey</title>
+<style>
+  @page { margin: 20mm 18mm; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #1a1a1a;
+    line-height: 1.55;
+    font-size: 11pt;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 19pt;
+    margin-bottom: 2pt;
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 8pt;
+  }
+  .subtitle {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 9pt;
+    color: #555;
+    margin-top: 4pt;
+    margin-bottom: 18pt;
+  }
+  .caveat {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 9.5pt;
+    background: #f5f2ea;
+    border-left: 3px solid #a8863a;
+    padding: 10pt 14pt;
+    margin-bottom: 20pt;
+    color: #3a2f1c;
+  }
+  h2 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13pt;
+    margin-top: 20pt;
+    margin-bottom: 6pt;
+    color: #7a1f2b;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4pt;
+  }
+  ul { margin-top: 4pt; padding-left: 20pt; }
+  li { margin-bottom: 5pt; }
+  code {
+    font-family: 'Courier New', monospace;
+    font-size: 9.5pt;
+    background: #f0f0f0;
+    padding: 1pt 4pt;
+    border-radius: 2pt;
+  }
+  .flag {
+    background: #fdf0ef;
+    border-left: 3px solid #b23a2e;
+    padding: 8pt 12pt;
+    margin-top: 8pt;
+    font-size: 10pt;
+  }
+  .flag strong { color: #7a1f2b; }
+  .closed {
+    background: #eef7ee;
+    border-left: 3px solid #2f7a3d;
+    padding: 8pt 12pt;
+    margin-top: 20pt;
+    font-size: 9.5pt;
+    color: #2a5a30;
+  }
+  hr { border: none; border-top: 1px solid #ccc; margin: 20pt 0; }
+  .summary-list li { margin-bottom: 8pt; }
+</style>
+</head>
+<body>
+
+<h1>Business Rules: Digital Deposit Account Journey</h1>
+<div class="subtitle">SYNTHETIC — demo only · Consolidated from server/rules/*.js, server/data/*.js, docs/rules/*.md, and inline logic in client/src/pages/*.jsx · updated after the journey's UX redesign</div>
+
+<div class="caveat">
+<strong>A note on trustworthiness:</strong> this works cleanly here because this repo's rules are already explicit and contained in a handful of small files. A real extractor over a production codebase would need human review before anyone acts on its output, not blind trust — especially anywhere logic is implicit rather than written down, which is exactly what the flagged items below are pointing at.
+</div>
+
+<h2>1. Overview</h2>
+<p>No validation rule. Displays the selected product name and a bulleted benefits list. Purely informational.</p>
+
+<h2>2. Phone number</h2>
+<p>Phone number must be a 10-digit number (non-digit characters stripped before counting). — <code>server/rules/phone.js</code></p>
+
+<h2>3. Verify code (OTP)</h2>
+<p>The one-time code is mocked: the only code that ever verifies is <code>123456</code>. — <code>server/rules/phone.js</code></p>
+
+<h2>4. Profile setup</h2>
+<ul>
+  <li>Full name, date of birth, and email are required. — <code>server/rules/profile.js</code></li>
+  <li>Applicant must be at least 18 years old — the eligibility gate for the entire journey.</li>
+  <li>Email becomes the channel for confirmation/welcome messages later.</li>
+</ul>
+
+<h2>5. Verify identity (intro)</h2>
+<p>No validation rule — a splash screen that sets expectations before the identity form. Captures no data.</p>
+
+<h2>6. Identity verification (form)</h2>
+<ul>
+  <li>Accepted ID types: Driver's License, Passport, Provincial ID Card, Permanent Resident Card.</li>
+  <li>ID must not be expired. — <code>server/rules/identity.js</code></li>
+  <li>Identity match requires full name, email, and phone number to all be on file — not name alone.</li>
+</ul>
+
+<h2>7. Address info</h2>
+<ul>
+  <li>Must be a Canadian residential address — PO boxes rejected. — <code>server/rules/address.js</code></li>
+  <li>Supported provinces: ON, BC, AB, QC, MB, NS, NB, SK, PE, NL.</li>
+  <li>Postal code must match standard Canadian format.</li>
+</ul>
+
+<h2>8. Employment info</h2>
+<ul>
+  <li>Fields branch by employment status (Employed/Self-employed, Student, Retired, Unemployed).</li>
+  <li>Annual income is always required and feeds the credit cross-sell eligibility check.</li>
+</ul>
+
+<h2>9. Credit card offer <em>(conditional)</em></h2>
+<p>Only shown if all hold — screen never appears for non-qualifying applicants:</p>
+<ul>
+  <li>Annual income ≥ $24,000</li>
+  <li>Employment status is Employed or Self-employed</li>
+  <li>Applicant is at least 21 years old</li>
+</ul>
+<p>If qualifying, displayed credit limit = 20% of annual income, capped at $15,000, rounded to the nearest $100. — <code>server/rules/creditOffer.js</code></p>
+
+<h2>10. Card added <em>(conditional)</em></h2>
+<p>No validation rule — an animated transition shown only if the offer was accepted, then auto-advances after ~2 seconds.</p>
+
+<h2>11. Tax questions</h2>
+<p>Captures two declarations as data only. No server call from this step at all, unlike every other step.</p>
+
+<h2>12. Account agreements</h2>
+<ul>
+  <li>Collapsible agreement cards: chequing (always, expanded) and credit card (only if the offer was accepted, collapsed).</li>
+  <li>Each visible card has its own checkbox; all visible cards must be checked to continue.</li>
+</ul>
+<div class="flag"><strong>Flagged:</strong> unlike every other step, this one has no server-side validation call at all — consent is enforced purely client-side. Nothing server-side stops a bypassed request from reaching Fund account.</div>
+
+<h2>13. Fund account</h2>
+<ul>
+  <li>Presented as selectable option cards, then a deposit amount field.</li>
+  <li>Digital channel offers transfer, Interac e-Transfer, or cheque deposit. — <code>server/rules/funding.js</code></li>
+  <li>Minimum initial deposit is $25.</li>
+</ul>
+
+<h2>14. Confirmation</h2>
+<ul>
+  <li>Records the application and returns a generated account number. — <code>server/data/mockDb.js</code></li>
+  <li>If the credit card offer was accepted, a <strong>separate</strong> account number is generated for that product.</li>
+  <li>Shows current balance and, if a card was added, its delivery timing (5-7 business days).</li>
+</ul>
+<div class="flag"><strong>Flagged:</strong> the second, credit-card-specific account number (<code>cardAccountNumber</code> in <code>server/data/mockDb.js</code>) is generated whenever the offer was accepted — this behavior has no mirror in <code>docs/rules/credit-cross-sell.md</code> or anywhere else.</div>
+
+<hr>
+
+<h2>Summary of flags</h2>
+<ul class="summary-list">
+  <li><strong>Account agreements</strong> consent is enforced client-side only — no server-side check backs it up. <em>(Carried forward — still true.)</em></li>
+  <li><strong>Confirmation's second account number</strong> for an accepted credit card exists only in code, no doc mirror. <em>(New.)</em></li>
+</ul>
+<div class="closed">Two flags from the previous version of this file are now closed: <code>docs/rules/phone-otp.md</code> and <code>docs/rules/fund-account.md</code> both exist and are accurate as of this pass.</div>
+
+</body>
+</html>

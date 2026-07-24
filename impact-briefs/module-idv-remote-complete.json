@@ -1,0 +1,8 @@
+{
+  "moduleId": "idv-remote-complete",
+  "name": "Identity Verified (Remote)",
+  "description": "SYNTHETIC. Branch-only, FA-facing moment-of-delight transition shown once the customer completes remote ID-V on their own device. Same animation pattern as credit-card-added. Auto-advances to address-info.",
+  "implementedAt": "client/src/pages/IdvRemoteComplete.jsx",
+  "appliesToChannels": ["branch"],
+  "notes": "See docs/rules/remote-identity-verification.md. Captures no data of its own."
+}
